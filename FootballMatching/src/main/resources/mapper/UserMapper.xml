@@ -9,4 +9,12 @@
         SELECT * FROM football.user;
     </select>
 
+    <select id="login_user" parameterType="domain.Users" resultType="string">
+        SELECT id FROM football.user WHERE id = #{id} AND pw=#{pw};
+    </select>
+
+    <select id="check_id" resultType = "string" parameterType="string">
+        SELECT user_id FROM shoppingmall.user_info WHERE user_id = #{id};
+    </select>
+
 </mapper>
