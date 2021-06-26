@@ -1,0 +1,29 @@
+.App {
+    text-align: center;
+}
+
+body {
+    font-family: 'nanumsquare';
+    background-color: green;
+}
+
+.green-nav {
+    background: rgb(165, 231, 165);
+    width: 100%;
+    padding: 20px;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.title {
+    color: black;
+}
+
+.buttons {
+    margin-left: 500px;
+}
+
+.login_button {
+    margin-right: 20px;
+}
