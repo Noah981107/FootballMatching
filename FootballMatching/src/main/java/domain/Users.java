@@ -1,10 +1,15 @@
 package domain;
 
+import java.util.Date;
+
 public class Users {
     protected String id;
-    protected String pw;
-    protected String user_name;
-    protected String phone_number;
+    protected String password;
+    protected String name;
+    protected String phoneNumber;
+    protected int location_code;
+    protected Date joinDate;
+    protected Boolean is_deleted;
 
     public String getId() {
         return id;
@@ -14,28 +19,51 @@ public class Users {
         this.id = id;
     }
 
-    public String getPw() {
-        return pw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getName() {
+        return name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
+    public int getLocation_code() {
+        return location_code;
+    }
+
+    public void setLocation_code(int location_code) {
+        this.location_code = location_code;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public Boolean getIs_deleted() {
+        return is_deleted;
+    }
+
+    public void setIs_deleted(Boolean is_deleted) {
+        this.is_deleted = is_deleted;
+    }
 }

@@ -5,16 +5,17 @@
 
 <mapper namespace="repository.UserMapper">
 
-    <select id="read_users" resultType="domain.Users">
-        SELECT * FROM football.user;
-    </select>
-
-    <select id="login_user" parameterType="domain.Users" resultType="string">
-        SELECT id FROM football.user WHERE id = #{id} AND pw=#{pw};
-    </select>
-
     <select id="check_id" resultType = "string" parameterType="string">
-        SELECT user_id FROM shoppingmall.user_info WHERE user_id = #{id};
+        SELECT id FROM footballMatching.user WHERE id = #{id};
     </select>
+
+    <select id="check_phoneNumber" resultType = "string" parameterType="string">
+        SELECT phoneNumber FROM footballMatching.user WHERE phoneNumber = #{phoneNumber};
+    </select>
+
+    <insert id="sign_up" parameterType = "domain.Users">
+        INSERT INTO footballMatching.user (id, password, name, phoneNumber, location_code, joinDate)
+        VALUES (#{id}, #{password}, #{name}, #{phoneNumber}, #{location_code}, #{joinDate})
+    </insert>
 
 </mapper>

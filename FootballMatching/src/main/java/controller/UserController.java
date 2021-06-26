@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.UserService;
 
 @Controller
+@RequestMapping(value = "user")
 public class UserController {
 
     @Autowired
@@ -24,24 +25,17 @@ public class UserController {
         return "test";
     }
 
-    //일반 회원 정보 조회하는 API
-    @ResponseBody
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public ResponseEntity read_users(){
-        return new ResponseEntity(userService.read_users(), HttpStatus.OK);
-    }
-
-    //일반 회원 로그인 API
-    @ResponseBody
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ResponseEntity login_user(@RequestBody Users user){
-        return new ResponseEntity(userService.login_user(user),HttpStatus.OK);
-    }
-
     //일반 회원 가입 API
     @ResponseBody
-    @RequestMapping(value = "/test2", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity sign_up(@RequestBody Users user){
         return new ResponseEntity(userService.sign_up(user), HttpStatus.OK);
     }
+
+    //일반 회원 로그인 API
+    //@ResponseBody
+    //@RequestMapping(value = "/signin", method = RequestMethod.POST)
+    //public ResponseEntity sign_in(@RequestBody Users user){
+    //   return new ResponseEntity(userService.login_user(user),HttpStatus.OK);
+    //}
 }
