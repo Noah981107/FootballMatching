@@ -10,4 +10,6 @@ public interface UserService {
     String sign_up(Users user); // 회원가입
     String sign_in(Users user); // 로그인
     String find_id(String name, String phoneNumber);
+    Users look_up(Users user);
+    String change_password(String new_password);
 }

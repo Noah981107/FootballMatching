@@ -72,13 +72,23 @@ public class UserServiceImpl implements UserService {
         HashMap<String, Object> map = new HashMap<String,Object>();
         map.put("name", name);
         map.put("phoneNumber", phoneNumber);
-        System.out.println(map);
         String return_id = userMapper.find_id(map);
+        System.out.println(return_id);
         if (return_id == null || return_id.isEmpty()){
             return "The memeber ID you are looking for cannot be found";
         }
         else {
             return return_id;
         }
+    }
+
+    @Override
+    public Users look_up(Users user) {
+        return userMapper.look_up(user);
+    }
+
+    @Override
+    public String change_password(String new_password){
+        return "test";
     }
 }

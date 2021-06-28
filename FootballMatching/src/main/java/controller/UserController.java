@@ -29,12 +29,29 @@ public class UserController {
         return new ResponseEntity(userService.sign_in(user),HttpStatus.OK);
     }
 
-    //회원 ID 찾기 API - 요고 수정 좀 필요함
+    //회원 ID 찾기 API
     @ResponseBody
-    @RequestMapping(value = "finding", method = RequestMethod.GET)
+    @RequestMapping(value = "/finding/id", method = RequestMethod.GET)
     public ResponseEntity find_id(@RequestParam(value = "name") String name, @RequestParam(value = "phoneNumber") String phoneNumber){
-        System.out.println(name);
-        System.out.println(phoneNumber);
         return new ResponseEntity(userService.find_id(name, phoneNumber), HttpStatus.OK);
+    }
+
+
+    //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인 - 수정 필요
+    @ResponseBody
+    @RequestMapping(value = "/finding/password", method = RequestMethod.POST)
+    public ResponseEntity find_password(@RequestBody Users user){
+        Users return_user = userService.look_up(user);
+        if(return_user != null){
+            change_password(user.getPassword());
+        }
+        return null;
+    }
+
+    //회원 비밀번호 찾기 API - 비밀번호 변경 - 수정 필요
+    @ResponseBody
+    @RequestMapping(value = "/changing/password", method = RequestMethod.POST)
+    public ResponseEntity change_password(@RequestBody String new_password){
+        return new ResponseEntity(userService.change_password(new_password), HttpStatus.OK);
     }
 }
