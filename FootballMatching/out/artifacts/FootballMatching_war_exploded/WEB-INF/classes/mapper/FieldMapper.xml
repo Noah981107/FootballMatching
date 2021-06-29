@@ -5,11 +5,17 @@
 
 <mapper namespace="repository.FieldMapper">
 
+    <!--지역 코드 검사-->
     <select id="check_locationCode" parameterType="int" resultType="int">
         SELECT code FROM footballMatching.location WHERE code = #{location_code};
     </select>
 
+    <!--지역 코드별 구장 검색-->
     <select id="search_field" parameterType="int" resultType="domain.Fields">
         SELECT * FROM footballMatching.field WHERE location_code = #{location_code};
+    </select>
+
+    <select id="check_fieldName" parameterType="string" resultType="int">
+        SELECT id FROM footballMatching.field WHERE name = #{field_name};
     </select>
 </mapper>
