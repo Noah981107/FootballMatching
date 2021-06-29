@@ -15,5 +15,5 @@ public interface UserMapper {
     Users sign_in(Users user);
     String find_id(Map map);
     Users look_up(Users user);
-    void change_password(Users user);
+    void change_password(Users users);
 }

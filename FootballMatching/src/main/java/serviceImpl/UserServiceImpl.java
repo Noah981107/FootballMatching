@@ -8,8 +8,6 @@ import repository.UserMapper;
 import service.UserService;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -73,7 +71,6 @@ public class UserServiceImpl implements UserService {
         map.put("name", name);
         map.put("phoneNumber", phoneNumber);
         String return_id = userMapper.find_id(map);
-        System.out.println(return_id);
         if (return_id == null || return_id.isEmpty()){
             return "The memeber ID you are looking for cannot be found";
         }
@@ -82,13 +79,16 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // 비밀번호 찾기 - id, 전화번호, 이름 일치 여부 파악
     @Override
     public Users look_up(Users user) {
         return userMapper.look_up(user);
     }
 
+    // 비밀번호 찾기 - 비밀번호 변경
     @Override
-    public String change_password(String new_password){
-        return "test";
+    public void change_password(Users user){
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        userMapper.change_password(user);
     }
 }

@@ -37,21 +37,24 @@ public class UserController {
     }
 
 
-    //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인 - 수정 필요
+    //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인
     @ResponseBody
     @RequestMapping(value = "/finding/password", method = RequestMethod.POST)
-    public ResponseEntity find_password(@RequestBody Users user){
+    public Users find_password(@RequestBody Users user){
         Users return_user = userService.look_up(user);
         if(return_user != null){
-            change_password(user.getPassword());
+            return_user.setPassword("0");
+            return return_user;
         }
         return null;
     }
 
-    //회원 비밀번호 찾기 API - 비밀번호 변경 - 수정 필요
+    //회원 비밀번호 찾기 API - 비밀번호 변경
     @ResponseBody
     @RequestMapping(value = "/changing/password", method = RequestMethod.POST)
-    public ResponseEntity change_password(@RequestBody String new_password){
-        return new ResponseEntity(userService.change_password(new_password), HttpStatus.OK);
+    public void change_password(@RequestBody Users user){
+        System.out.println(user.getPassword());
+        System.out.println(user.getId());
+        userService.change_password(user);
     }
 }

@@ -31,13 +31,15 @@
         SELECT id FROM footballMatching.user WHERE name = #{name} AND phoneNumber = #{phoneNumber};
     </select>
 
+    <!--비밀번호 찾기 - id, 전화번호, 이름 일치 여부 파악-->
     <select id="look_up" parameterType="domain.Users" resultType="domain.Users">
         SELECT * FROM footballMatching.user WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber};
     </select>
 
+    <!--비밀번호 찾기 - 비밀번호 변경-->
     <update id="change_password" parameterType="domain.Users">
         UPDATE footballMatching.user
         SET password = #{password}
-        WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber};
+        WHERE id = #{id};
     </update>
 </mapper>
