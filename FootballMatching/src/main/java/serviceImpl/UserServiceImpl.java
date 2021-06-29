@@ -30,7 +30,10 @@ public class UserServiceImpl implements UserService {
     // 회원 가입
     @Override
     public String sign_up(Users user) {
+        System.out.println(user.getId());
+        System.out.println(user.getPassword());
         String return_id  = check_id(user.getId());
+        System.out.println(return_id);
         if (return_id == null || return_id.isEmpty()){
             String return_phoneNumber = check_phoneNumber(user.getPhoneNumber());
             if(return_phoneNumber == null || return_phoneNumber.isEmpty()){

@@ -22,7 +22,7 @@
     </insert>
 
     <!--로그인-->
-    <select id="test" parameterType="domain.Users" resultType="domain.Users">
+    <select id="sign_in" parameterType="domain.Users" resultType="domain.Users">
         SELECT * FROM footballMatching.user WHERE id = #{id};
     </select>
 
@@ -40,6 +40,6 @@
     <update id="change_password" parameterType="domain.Users">
         UPDATE footballMatching.user
         SET password = #{password}
-        WHERE id = #{id};
+        WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber};
     </update>
 </mapper>

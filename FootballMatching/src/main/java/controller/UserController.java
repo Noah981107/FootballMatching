@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import service.UserService;
 
 @Controller
-@RequestMapping(value = "user")
+@RequestMapping(value = "/user")
 public class UserController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class UserController {
     //회원 ID 찾기 API
     @ResponseBody
     @RequestMapping(value = "/finding/id", method = RequestMethod.GET)
-    public ResponseEntity find_id(@RequestParam(value = "name") String name, @RequestParam(value = "phoneNumber") String phoneNumber){
+    public ResponseEntity find_id( , @RequestParam(value = "phoneNumber") String phoneNumber){
         return new ResponseEntity(userService.find_id(name, phoneNumber), HttpStatus.OK);
     }
 
