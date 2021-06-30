@@ -20,7 +20,7 @@ public class UserAuthController {
     //회원 정보 수정 - 비밀번호, 이름 , 전화번호 수정 가능
     @ResponseBody
     @RequestMapping(value = "/modification", method = RequestMethod.POST)
-    public String modification(@RequestHeader(value = "Authorizationi") String token, @RequestBody Users user){
+    public String modification(@RequestHeader(value = "Authorization") String token, @RequestBody Users user){
         return userAuthService.modification(token, user);
     }
 

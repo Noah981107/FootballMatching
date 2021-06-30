@@ -17,9 +17,10 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     private UserService userService;
 
-    @Autowired
+    @Autowired(required=false)
     private JwtUtil jwtUtil;
 
+    //회원 정보 수정 - 이름, 비밀번호, 전화번호 수정
     @Override
     public String modification(String token, Users user) {
         String return_phoneNumber = userService.check_phoneNumber(user.getPhoneNumber());

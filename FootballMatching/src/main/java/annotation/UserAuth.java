@@ -7,5 +7,5 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UserAuth {
+public @interface UserAuth { // 일반 회원을 위한 어노테이션
 }

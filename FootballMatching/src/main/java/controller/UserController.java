@@ -1,12 +1,15 @@
 package controller;
 
 import domain.Users;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import service.UserService;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -57,11 +60,5 @@ public class UserController {
         System.out.println(user.getId());
         userService.change_password(user);
     }
-
-    /*@ResponseBody
-    @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public ResponseEntity token_issued(@RequestBody String id){
-        return new ResponseEntity(userService.token_issued(id), HttpStatus.OK);
-    }*/
 
 }

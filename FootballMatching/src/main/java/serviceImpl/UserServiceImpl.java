@@ -1,6 +1,7 @@
 package serviceImpl;
 
 import domain.Users;
+import io.jsonwebtoken.Jwt;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,9 @@ import java.util.HashMap;
 @Service
 public class UserServiceImpl implements UserService {
 
-    /*@Autowired
-    private JwtUtil jwtUtil;*/
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     private UserMapper userMapper;
@@ -29,6 +31,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public String check_phoneNumber(String phoneNumber) {
         return userMapper.check_phoneNumber(phoneNumber);
+    }
+
+    // 토큰 발급
+    @Override
+    public String token_issued(String id) {
+        String return_id = check_id(id);
+        if(return_id == null || return_id.isEmpty()){
+            try {
+                throw new Exception("There is no such id");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "ID is None";
+            }
+        }
+        else{
+            return jwtUtil.token_issued(return_id);
+        }
     }
 
     // 회원 가입
@@ -60,7 +79,7 @@ public class UserServiceImpl implements UserService {
         Users return_user = userMapper.sign_in(user);
         if(return_user != null){
             if(BCrypt.checkpw(user.getPassword(), return_user.getPassword())){
-                return "login success";
+                return token_issued(return_user.getId());
             }
             else {
                 return "login failed";
@@ -98,21 +117,4 @@ public class UserServiceImpl implements UserService {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         userMapper.change_password(user);
     }
-
-    /*@Override
-    public String token_issued(String id) {
-        String return_id = check_id(id);
-
-        if(return_id == null || return_id.isEmpty()){
-            try {
-                throw new Exception("There is no such id");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "ID is None";
-            }
-        }
-        else{
-            return jwtUtil.token_issued(return_id);
-        }
-    }*/
 }
