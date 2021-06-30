@@ -21,44 +21,38 @@ public class UserController {
     //일반 회원 가입 API
     @ResponseBody
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity sign_up(@RequestBody Users user){
-        return new ResponseEntity(userService.sign_up(user), HttpStatus.OK);
+    public ResponseEntity signUp(@RequestBody Users user){
+        return new ResponseEntity(userService.signUp(user), HttpStatus.OK);
     }
 
     //일반 회원 로그인 API - 로그인할때 토큰도 발급해줘야함! 수정 필요
     @ResponseBody
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public ResponseEntity sign_in(@RequestBody Users user){
-        return new ResponseEntity(userService.sign_in(user),HttpStatus.OK);
+    public ResponseEntity signIn(@RequestBody Users user){
+        return new ResponseEntity(userService.signIn(user),HttpStatus.OK);
     }
 
     //회원 ID 찾기 API
     @ResponseBody
     @RequestMapping(value = "/finding/id", method = RequestMethod.GET)
-    public ResponseEntity find_id(@RequestParam(value = "name") String name , @RequestParam(value = "phoneNumber") String phoneNumber){
-        return new ResponseEntity(userService.find_id(name, phoneNumber), HttpStatus.OK);
+    public ResponseEntity findId(@RequestParam(value = "name") String name ,
+                                 @RequestParam(value = "phoneNumber") String phoneNumber){
+        return new ResponseEntity(userService.findId(name, phoneNumber), HttpStatus.OK);
     }
 
 
     //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인
     @ResponseBody
     @RequestMapping(value = "/finding/password", method = RequestMethod.POST)
-    public Users find_password(@RequestBody Users user){
-        Users return_user = userService.look_up(user);
-        if(return_user != null){
-            return_user.setPassword("0");
-            return return_user;
-        }
-        return null;
+    public ResponseEntity findPassword(@RequestBody Users user){
+        return new ResponseEntity(userService.lookUp(user), HttpStatus.OK) ;
     }
 
     //회원 비밀번호 찾기 API - 비밀번호 변경
     @ResponseBody
-    @RequestMapping(value = "/changing/password", method = RequestMethod.POST)
-    public void change_password(@RequestBody Users user){
-        System.out.println(user.getPassword());
-        System.out.println(user.getId());
-        userService.change_password(user);
+    @RequestMapping(value = "/update/password", method = RequestMethod.PATCH)
+    public void changePassword(@RequestBody Users user){
+        userService.changePassword(user);
     }
 
 }

@@ -18,43 +18,37 @@ public class BusinessUserController {
     // 사업자 회원 회원가입 API
     @ResponseBody
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity sign_up(@RequestBody BusinessUsers b_user){
-        return new ResponseEntity(b_userService.sign_up(b_user), HttpStatus.OK);
+    public ResponseEntity signUp(@RequestBody BusinessUsers b_user){
+        return new ResponseEntity(b_userService.signUp(b_user), HttpStatus.OK);
     }
 
     // 사업자 회원 로그인 API - 로그인할때 토큰도 발급해줘야함! 수정 필요
     @ResponseBody
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public ResponseEntity sign_in(@RequestBody BusinessUsers b_user){
-        return new ResponseEntity(b_userService.sign_in(b_user), HttpStatus.OK);
+    public ResponseEntity signIn(@RequestBody BusinessUsers b_user){
+        return new ResponseEntity(b_userService.signIn(b_user), HttpStatus.OK);
     }
 
     // 사업자 회원 ID 찾기 API
     @ResponseBody
     @RequestMapping(value = "/finding/id", method = RequestMethod.GET)
-    public ResponseEntity find_id(@RequestParam(value = "name") String name, @RequestParam(value = "phoneNumber") String phoneNumber, @RequestParam(value = "field-name") String field_name){
-        return new ResponseEntity(b_userService.find_id(name,phoneNumber,field_name), HttpStatus.OK);
+    public ResponseEntity findID(@RequestParam(value = "name") String name,
+                                 @RequestParam(value = "phoneNumber") String phoneNumber,
+                                 @RequestParam(value = "field-name") String field_name){
+        return new ResponseEntity(b_userService.findId(name,phoneNumber,field_name), HttpStatus.OK);
     }
 
     //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인
     @ResponseBody
     @RequestMapping(value = "/finding/password", method = RequestMethod.POST)
-    public BusinessUsers find_password(@RequestBody BusinessUsers b_user){
-        BusinessUsers return_b_user = b_userService.look_up(b_user);
-        System.out.println(return_b_user.getId() );
-        if(return_b_user != null){
-            return_b_user.setPassword("0");
-            return return_b_user;
-        }
-        else{
-            return null;
-        }
+    public ResponseEntity findPassword(@RequestBody BusinessUsers b_user){
+        return new ResponseEntity(b_userService.lookUp(b_user), HttpStatus.OK);
     }
 
     //회원 비밀번호 찾기 API - 비밀번호 변경
     @ResponseBody
-    @RequestMapping(value = "/changing/password", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/password", method = RequestMethod.PATCH)
     public void change_password(@RequestBody BusinessUsers b_user){
-        b_userService.change_password(b_user);
+        b_userService.changePassword(b_user);
     }
 }
