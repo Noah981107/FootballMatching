@@ -21,7 +21,7 @@ public class FieldController {
     // 지역별 구장 조회
     @ResponseBody
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ResponseEntity search_field(@RequestParam(value = "location_code") int location_code){
+    public ResponseEntity search_field(@RequestParam(value = "location-code") int location_code){
         return new ResponseEntity(fieldService.search_field(location_code), HttpStatus.OK);
     }
 }

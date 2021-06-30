@@ -7,18 +7,9 @@ public class BusinessUsers {
     protected String password;
     protected String name;
     protected String phoneNumber;
-    protected int field_id;
     protected String field_name;
     protected Date joinDate;
     protected Boolean is_deleted;
-
-    public int getField_id() {
-        return field_id;
-    }
-
-    public void setField_id(int field_id) {
-        this.field_id = field_id;
-    }
 
     public String getField_name() { return field_name; }
 
