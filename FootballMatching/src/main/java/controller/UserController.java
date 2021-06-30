@@ -22,7 +22,7 @@ public class UserController {
         return new ResponseEntity(userService.sign_up(user), HttpStatus.OK);
     }
 
-    //일반 회원 로그인 API
+    //일반 회원 로그인 API - 로그인할때 토큰도 발급해줘야함! 수정 필요
     @ResponseBody
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity sign_in(@RequestBody Users user){
@@ -57,4 +57,11 @@ public class UserController {
         System.out.println(user.getId());
         userService.change_password(user);
     }
+
+    /*@ResponseBody
+    @RequestMapping(value = "/token", method = RequestMethod.POST)
+    public ResponseEntity token_issued(@RequestBody String id){
+        return new ResponseEntity(userService.token_issued(id), HttpStatus.OK);
+    }*/
+
 }

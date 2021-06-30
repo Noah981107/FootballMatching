@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.UserMapper;
 import service.UserService;
+import util.JwtUtil;
 
 import java.util.HashMap;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    /*@Autowired
+    private JwtUtil jwtUtil;*/
 
     @Autowired
     private UserMapper userMapper;
@@ -94,4 +98,21 @@ public class UserServiceImpl implements UserService {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         userMapper.change_password(user);
     }
+
+    /*@Override
+    public String token_issued(String id) {
+        String return_id = check_id(id);
+
+        if(return_id == null || return_id.isEmpty()){
+            try {
+                throw new Exception("There is no such id");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "ID is None";
+            }
+        }
+        else{
+            return jwtUtil.token_issued(return_id);
+        }
+    }*/
 }

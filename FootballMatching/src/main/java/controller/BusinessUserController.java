@@ -22,7 +22,7 @@ public class BusinessUserController {
         return new ResponseEntity(b_userService.sign_up(b_user), HttpStatus.OK);
     }
 
-    // 사업자 회원 로그인 API
+    // 사업자 회원 로그인 API - 로그인할때 토큰도 발급해줘야함! 수정 필요
     @ResponseBody
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity sign_in(@RequestBody BusinessUsers b_user){
