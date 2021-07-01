@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.non_auth.BusinessUserMapper">
+
+    <!--아이디 중복 검사-->
+    <select id="checkId" resultType = "string" parameterType="string">
+        SELECT id FROM footballMatching.business_user WHERE id = #{id};
+    </select>
+
+    <!--전화번호 중복 검사-->
+    <select id="checkPhoneNumber" resultType = "string" parameterType="string">
+        SELECT phoneNumber FROM footballMatching.business_user WHERE phoneNumber = #{phoneNumber};
+    </select>
+
+    <!--회원 가입-->
+    <insert id="signUp" parameterType="domain.BusinessUsers">
+        INSERT INTO footballMatching.business_user (id, password, name, phoneNumber, field_id, joinDate)
+        VALUES (#{id}, #{password}, #{name}, #{phoneNumber}, #{field_name}, #{joinDate});
+    </insert>
+
+    <!--로그인-->
+    <select id="signIn" parameterType="domain.BusinessUsers" resultType="domain.BusinessUsers">
+        SELECT * FROM footballMatching.business_user WHERE id = #{id};
+    </select>
+
+    <!--ID 찾기-->
+    <select id="findId" parameterType="hashMap" resultType="string">
+        SELECT id FROM footballMatching.business_user WHERE name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{field_id};
+    </select>
+
+    <!--비밀번호 찾기 - id, 전화번호, 이름, 구장 이름 일치 여부 파악-->
+    <select id="lookUp" parameterType="domain.BusinessUsers" resultType="domain.BusinessUsers">
+        <!--SELECT * FROM footballMatching.business_user WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{field_name};-->
+        SELECT a.id, a.password, a.name, a.phoneNumber, b.name as field_name
+        FROM footballMatching.business_user as a LEFT JOIN footballMatching.field as b on a.field_id = b.id;
+    </select>
+
+    <!--비밀번호 찾기 - 비밀번호 변경-->
+    <update id="changePassword" parameterType="domain.BusinessUsers">
+        UPDATE footballMatching.business_user
+        SET password = #{password}
+        WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{field_name} ;
+    </update>
+
+</mapper>

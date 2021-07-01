@@ -1,12 +1,15 @@
 package serviceImpl.auth;
 
 import domain.Users;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.auth.UserAuthMapper;
-import service.UserService;
+import service.non_auth.UserService;
 import service.auth.UserAuthService;
 import util.JwtUtil;
+
+import java.util.HashMap;
 
 @Service
 public class UserAuthServiceImpl implements UserAuthService {
@@ -17,20 +20,51 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     private UserService userService;
 
-    @Autowired(required=false)
+    @Autowired
     private JwtUtil jwtUtil;
 
-    //회원 정보 수정 - 이름, 비밀번호, 전화번호 수정
+    //회원 정보 수정 - 비밀번호, 이름 , 전화번호 수정 가능
     @Override
     public String modification(String token, Users user) {
-        String return_phoneNumber = userService.check_phoneNumber(user.getPhoneNumber());
-        if(return_phoneNumber != null || return_phoneNumber.isEmpty()){
-            user.setId(jwtUtil.get_id(token));
-            userAuthMapper.modification(user);
-            return "Member Information Modification Success";
+
+        String name = user.getName();
+        String password = user.getPassword();
+        String phoneNumber = user.getPhoneNumber();
+        String account = jwtUtil.get_id(token);
+        System.out.println(name);
+        System.out.println(password);
+        System.out.println(phoneNumber);
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("id", account);
+        if (name != null){
+            map.put("name", name);
+            userAuthMapper.updateName(map);
         }
-        else{
-            return "There are members with duplicate phone numbers.";
+        if(phoneNumber != null){
+            String returnPhoneNumber = userService.checkPhoneNumber(phoneNumber);
+            if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){
+                map.put("phoneNumber", phoneNumber);
+                userAuthMapper.updatePhoneNumber(map);
+            }
+            // 휴대폰 중복되었을때 오류 처리
         }
+        if(password != null){
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
+            map.put("password", password);
+            userAuthMapper.updatePassword(map);
+        }
+        return "hi";
+    }
+
+    @Override
+    public Users inquiry(String token) {
+        String id = jwtUtil.get_id(token);
+        return userAuthMapper.inquiry(id);
+    }
+
+    @Override
+    public void withdraw(String token) {
+        String id = jwtUtil.get_id(token);
+        userAuthMapper.withdraw(id);
     }
 }

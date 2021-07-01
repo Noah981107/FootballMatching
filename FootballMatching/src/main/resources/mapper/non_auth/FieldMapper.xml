@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.non_auth.FieldMapper">
+
+    <!--지역 코드 검사-->
+    <select id="checkLocationCode" parameterType="int" resultType="int">
+        SELECT code FROM footballMatching.location WHERE code = #{location_code};
+    </select>
+
+    <!--지역 코드별 구장 검색-->
+    <select id="searchField" parameterType="int" resultType="domain.Fields">
+        SELECT * FROM footballMatching.field WHERE location_code = #{location_code};
+    </select>
+
+    <select id="checkFieldName" parameterType="string" resultType="int">
+        SELECT id FROM footballMatching.field WHERE name = #{field_name};
+    </select>
+</mapper>

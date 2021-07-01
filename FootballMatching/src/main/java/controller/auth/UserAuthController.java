@@ -19,9 +19,25 @@ public class UserAuthController {
 
     //회원 정보 수정 - 비밀번호, 이름 , 전화번호 수정 가능
     @ResponseBody
-    @RequestMapping(value = "/modification", method = RequestMethod.POST)
+    @RequestMapping(value = "/modification", method = RequestMethod.PATCH)
     public String modification(@RequestHeader(value = "Authorization") String token, @RequestBody Users user){
+        System.out.println(token);
+        System.out.println(user.getPhoneNumber());
         return userAuthService.modification(token, user);
+    }
+
+    //자신의 정보 조회
+    @ResponseBody
+    @RequestMapping(value = "/me", method = RequestMethod.GET)
+    public ResponseEntity inquiry(@RequestHeader(value = "Authorization") String token){
+        return new ResponseEntity(userAuthService.inquiry(token), HttpStatus.OK);
+    }
+
+    //회원 탈퇴
+    @ResponseBody
+    @RequestMapping(value="/withdraw", method = RequestMethod.PATCH)
+    public void withdraw(@RequestHeader(value = "Authorization") String token){
+        userAuthService.withdraw(token);
     }
 
 }
