@@ -18,7 +18,7 @@
     <!--회원 가입-->
     <insert id="signUp" parameterType="domain.BusinessUsers">
         INSERT INTO footballMatching.business_user (id, password, name, phoneNumber, field_id, joinDate)
-        VALUES (#{id}, #{password}, #{name}, #{phoneNumber}, #{field_name}, #{joinDate});
+        VALUES (#{id}, #{password}, #{name}, #{phoneNumber}, #{fieldName}, #{joinDate});
     </insert>
 
     <!--로그인-->
@@ -28,7 +28,7 @@
 
     <!--ID 찾기-->
     <select id="findId" parameterType="hashMap" resultType="string">
-        SELECT id FROM footballMatching.business_user WHERE name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{field_id};
+        SELECT id FROM footballMatching.business_user WHERE name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{fieldName};
     </select>
 
     <!--비밀번호 찾기 - id, 전화번호, 이름, 구장 이름 일치 여부 파악-->
@@ -42,7 +42,7 @@
     <update id="changePassword" parameterType="domain.BusinessUsers">
         UPDATE footballMatching.business_user
         SET password = #{password}
-        WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{field_name} ;
+        WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{fieldName} ;
     </update>
 
 </mapper>

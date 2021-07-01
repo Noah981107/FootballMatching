@@ -3,16 +3,17 @@ package domain;
 import java.util.Date;
 
 public class Fields {
+
     protected String name;
     protected String phoneNumber;
-    protected int location_code;
+    protected int locationCode;
     protected String address;
     protected int parking;
     protected int restroom;
     protected int market;
     protected String information;
     protected Date registrationDate;
-    protected Boolean is_deleted;
+    protected Boolean isDeleted;
 
     public String getName() {
         return name;
@@ -30,12 +31,12 @@ public class Fields {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getLocation_code() {
-        return location_code;
+    public int getLocationCode() {
+        return locationCode;
     }
 
-    public void setLocation_code(int location_code) {
-        this.location_code = location_code;
+    public void setLocationCode(int locationCode) {
+        this.locationCode = locationCode;
     }
 
     public String getAddress() {
@@ -86,11 +87,11 @@ public class Fields {
         this.registrationDate = registrationDate;
     }
 
-    public Boolean getIs_deleted() {
-        return is_deleted;
+    public Boolean getDeleted() {
+        return isDeleted;
     }
 
-    public void setIs_deleted(Boolean is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }

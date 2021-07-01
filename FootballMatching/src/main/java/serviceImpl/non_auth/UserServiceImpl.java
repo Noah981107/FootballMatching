@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
     // 토큰 발급
     @Override
     public String tokenIssued(String id) {
-        String return_id = checkId(id);
-        if(return_id == null || return_id.isEmpty()){
+        String returnId = checkId(id);
+        if(returnId == null || returnId.isEmpty()){
             try {
                 throw new Exception("There is no such id");
             } catch (Exception e) {
@@ -45,21 +45,17 @@ public class UserServiceImpl implements UserService {
             }
         }
         else{
-            return jwtUtil.token_issued(return_id);
+            return jwtUtil.tokenIssued(returnId);
         }
     }
 
     // 회원 가입
     @Override
     public String signUp(Users user) {
-        System.out.println("여기요");
-        System.out.println(user.getId());
-        System.out.println(user.getPassword());
-        String return_id  = checkId(user.getId());
-        System.out.println(return_id);
-        if (return_id == null || return_id.isEmpty()){
-            String return_phoneNumber = checkPhoneNumber(user.getPhoneNumber());
-            if(return_phoneNumber == null || return_phoneNumber.isEmpty()){
+        String returnId  = checkId(user.getId());
+        if (returnId == null || returnId.isEmpty()){
+            String returnPhoneNumber = checkPhoneNumber(user.getPhoneNumber());
+            if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 userMapper.signUp(user);
                 return "Membership Success";
@@ -76,10 +72,10 @@ public class UserServiceImpl implements UserService {
     // 로그인
     @Override
     public String signIn(Users user) {
-        Users return_user = userMapper.signIn(user);
-        if(return_user != null){
-            if(BCrypt.checkpw(user.getPassword(), return_user.getPassword())){
-                return tokenIssued(return_user.getId());
+        Users returnUser = userMapper.signIn(user);
+        if(returnUser != null){
+            if(BCrypt.checkpw(user.getPassword(), returnUser.getPassword())){
+                return tokenIssued(returnUser.getId());
             }
             else {
                 return "login failed";
@@ -96,22 +92,22 @@ public class UserServiceImpl implements UserService {
         HashMap<String, Object> map = new HashMap<String,Object>();
         map.put("name", name);
         map.put("phoneNumber", phoneNumber);
-        String return_id = userMapper.findId(map);
-        if (return_id == null || return_id.isEmpty()){
+        String returnId = userMapper.findId(map);
+        if (returnId == null || returnId.isEmpty()){
             return "The memeber ID you are looking for cannot be found";
         }
         else {
-            return return_id;
+            return returnId;
         }
     }
 
     // 비밀번호 찾기 - id, 전화번호, 이름 일치 여부 파악
     @Override
     public Users lookUp(Users user) {
-        Users return_user = userMapper.lookUp(user);
-        if(return_user != null){
-            return_user.setPassword("0");
-            return return_user;
+        Users returnUser = userMapper.lookUp(user);
+        if(returnUser != null){
+            returnUser.setPassword("0");
+            return returnUser;
         }
         return null;
     }

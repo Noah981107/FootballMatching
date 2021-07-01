@@ -18,15 +18,12 @@ public class JwtUtil {
     @Value("${json.web.token.secret.key}")
     String secret;
 
-    public String token_issued(String return_id){
-        System.out.println("herer");
+    public String tokenIssued(String returnId){
         Map<String, Object> headers = new HashMap<String, Object>(); // header
         headers.put("typ", "JWT");
         headers.put("alg","HS256");
-        System.out.println(headers);
         Map<String, Object> payloads = new HashMap<String, Object>(); //payload
-        payloads.put("id", return_id);
-        System.out.println(payloads);
+        payloads.put("id", returnId);
         Calendar calendar = Calendar.getInstance(); // singleton object java calendar
         calendar.setTime(new Date());
         calendar.add(Calendar.HOUR_OF_DAY, 24); // access token expire 24h later
@@ -34,7 +31,7 @@ public class JwtUtil {
         return Jwts.builder().setHeader(headers).setClaims(payloads).setExpiration(exp).signWith(SignatureAlgorithm.HS256, secret.getBytes()).compact();
     }
 
-    public String get_id(String token){
+    public String getId(String token){
         token = token.substring(7);
         Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
         String id = String.valueOf(claims.get("id", String.class));

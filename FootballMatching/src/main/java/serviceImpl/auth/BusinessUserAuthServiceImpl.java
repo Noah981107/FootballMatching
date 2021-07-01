@@ -18,7 +18,7 @@ public class BusinessUserAuthServiceImpl implements BusinessUserAuthService {
     private BusinessUserAuthMapper bUserAuthMapper;
 
     @Autowired
-    private BusinessUserService b_userService;
+    private BusinessUserService bUserService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -28,7 +28,7 @@ public class BusinessUserAuthServiceImpl implements BusinessUserAuthService {
         String name = bUser.getName();
         String password = bUser.getPassword();
         String phoneNumber = bUser.getPhoneNumber();
-        String account = jwtUtil.get_id(token);
+        String account = jwtUtil.getId(token);
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("id", account);
         if (name != null) {
@@ -36,7 +36,7 @@ public class BusinessUserAuthServiceImpl implements BusinessUserAuthService {
             bUserAuthMapper.updateName(map);
         }
         if(phoneNumber != null){
-            String returnPhoneNumber = b_userService.checkPhoneNumber(phoneNumber);
+            String returnPhoneNumber = bUserService.checkPhoneNumber(phoneNumber);
             if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){
                 map.put("phoneNumber", phoneNumber);
                 bUserAuthMapper.updatePhoneNumber(map);
@@ -52,12 +52,12 @@ public class BusinessUserAuthServiceImpl implements BusinessUserAuthService {
 
     @Override
     public BusinessUsers inquiry(String token) {
-        String id = jwtUtil.get_id(token);
+        String id = jwtUtil.getId(token);
         return bUserAuthMapper.inquiry(id);
     }
 
     public void withdraw(String token){
-        String id = jwtUtil.get_id(token);
+        String id = jwtUtil.getId(token);
         bUserAuthMapper.withdraw(id);
     }
 }

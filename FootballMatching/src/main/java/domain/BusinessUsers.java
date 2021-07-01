@@ -3,17 +3,14 @@ package domain;
 import java.util.Date;
 
 public class BusinessUsers {
+
     protected String id;
     protected String password;
     protected String name;
     protected String phoneNumber;
-    protected String field_name;
+    protected String fieldName;
     protected Date joinDate;
-    protected Boolean is_deleted;
-
-    public String getField_name() { return field_name; }
-
-    public void setField_name(String field_name) { this.field_name = field_name; }
+    protected Boolean isDeleted;
 
     public String getId() {
         return id;
@@ -47,6 +44,14 @@ public class BusinessUsers {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
     public Date getJoinDate() {
         return joinDate;
     }
@@ -55,11 +60,11 @@ public class BusinessUsers {
         this.joinDate = joinDate;
     }
 
-    public Boolean getIs_deleted() {
-        return is_deleted;
+    public Boolean getDeleted() {
+        return isDeleted;
     }
 
-    public void setIs_deleted(Boolean is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }

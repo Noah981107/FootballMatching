@@ -16,10 +16,10 @@ public class FieldServiceImpl implements FieldService {
 
     //지역 코드별 구장 검색
     @Override
-    public List<Fields> searchField(int location_code) {
-        int result = fieldMapper.checkLocationCode(location_code);
+    public List<Fields> searchField(int locationCode) {
+        int result = fieldMapper.checkLocationCode(locationCode);
         if(result > 0){
-            return fieldMapper.searchField(location_code);
+            return fieldMapper.searchField(locationCode);
         }
         else{
             return null;

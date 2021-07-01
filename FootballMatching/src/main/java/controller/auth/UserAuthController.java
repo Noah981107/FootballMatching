@@ -21,8 +21,6 @@ public class UserAuthController {
     @ResponseBody
     @RequestMapping(value = "/modification", method = RequestMethod.PATCH)
     public String modification(@RequestHeader(value = "Authorization") String token, @RequestBody Users user){
-        System.out.println(token);
-        System.out.println(user.getPhoneNumber());
         return userAuthService.modification(token, user);
     }
 

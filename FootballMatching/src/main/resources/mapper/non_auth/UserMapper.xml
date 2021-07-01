@@ -18,7 +18,7 @@
     <!--회원 가입-->
     <insert id="signUp" parameterType = "domain.Users">
         INSERT INTO footballMatching.user (id, password, name, phoneNumber, location_code, joinDate)
-        VALUES (#{id}, #{password}, #{name}, #{phoneNumber}, #{location_code}, #{joinDate});
+        VALUES (#{id}, #{password}, #{name}, #{phoneNumber}, #{locationCode}, #{joinDate});
     </insert>
 
     <!--로그인-->

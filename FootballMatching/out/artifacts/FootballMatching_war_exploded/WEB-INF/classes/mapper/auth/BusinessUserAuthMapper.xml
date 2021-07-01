@@ -16,7 +16,7 @@
     <update id="updatePhoneNumber" parameterType="hashMap">
         UPDATE footballMatching.business_user
         SET phoneNumber = #{phoneNumber}
-        WHERE id = #{id}; 
+        WHERE id = #{id};
     </update>
 
     <!--회원 정보 변경 - 비밀번호-->

@@ -30,10 +30,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         String name = user.getName();
         String password = user.getPassword();
         String phoneNumber = user.getPhoneNumber();
-        String account = jwtUtil.get_id(token);
-        System.out.println(name);
-        System.out.println(password);
-        System.out.println(phoneNumber);
+        String account = jwtUtil.getId(token);
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("id", account);
         if (name != null){
@@ -58,13 +55,13 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public Users inquiry(String token) {
-        String id = jwtUtil.get_id(token);
+        String id = jwtUtil.getId(token);
         return userAuthMapper.inquiry(id);
     }
 
     @Override
     public void withdraw(String token) {
-        String id = jwtUtil.get_id(token);
+        String id = jwtUtil.getId(token);
         userAuthMapper.withdraw(id);
     }
 }

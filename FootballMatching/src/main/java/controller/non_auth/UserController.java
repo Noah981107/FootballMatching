@@ -42,8 +42,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/finding/password", method = RequestMethod.POST)
     public ResponseEntity findPassword(@RequestBody Users user){
-        System.out.println(user.getId());
-        System.out.println(user.getPassword());
         return new ResponseEntity(userService.lookUp(user), HttpStatus.OK) ;
     }
 
