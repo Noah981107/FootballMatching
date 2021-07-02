@@ -14,4 +14,5 @@ public interface UserMapper {
     String findId(Map map); // ID 찾기
     Users lookUp(Users user); // 비밀번호 찾기 - id, 전화번호, 이름 일치 여부 파악
     void changePassword(Users user); //비밀번호 찾기 - 비밀번호 변경
+    String findIdx(String id); // idx 찾기
 }

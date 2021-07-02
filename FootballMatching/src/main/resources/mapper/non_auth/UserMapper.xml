@@ -43,4 +43,11 @@
         WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber};
     </update>
 
+    <!--idx 찾기-->
+    <select id="findIdx" parameterType="string" resultType="string">
+        SELECT idx
+        FROM footballMatching.user
+        WHERE id = #{id};
+    </select>
+
 </mapper>

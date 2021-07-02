@@ -26,10 +26,15 @@ public class TeamController {
 
     //팀 이름으로 조회
     @ResponseBody
-    @RequestMapping(value = "/finding", method = RequestMethod.GET)
+    @RequestMapping(value = "/name-finding", method = RequestMethod.GET)
     public ResponseEntity findName(@RequestParam(value = "team-name") String teamName){
         return new ResponseEntity(teamService.findName(teamName), HttpStatus.OK);
     }
 
     //지역별 팀 조회
+    @ResponseBody
+    @RequestMapping(value = "/local-finding", method = RequestMethod.GET)
+    public ResponseEntity findLocal(@RequestParam(value = "location-code") int locationCode){
+        return new ResponseEntity(teamService.findLocal(locationCode), HttpStatus.OK);
+    }
 }

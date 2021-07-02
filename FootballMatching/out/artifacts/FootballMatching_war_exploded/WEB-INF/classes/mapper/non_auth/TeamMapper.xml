@@ -21,4 +21,13 @@
         ON a.user_idx = b.idx
         WHERE a.name = #{teamName};
     </select>
+
+    <!--지역 별 팀 조회-->
+    <select id="findLocal" parameterType="int" resultType="domain.Team">
+        SELECT a. name, b.id as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
+        FROM footballMatching.team as a
+        LEFT JOIN footballMatching.user as b
+        ON a.user_idx = b.idx
+        WHERE a.location_code = #{locationCode};
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package serviceImpl.non_auth;
 import domain.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import repository.non_auth.FieldMapper;
 import repository.non_auth.TeamMapper;
 import service.non_auth.TeamService;
 
@@ -24,5 +25,10 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team findName(String teamName) {
         return teamMapper.findName(teamName);
+    }
+
+    @Override
+    public List<Team> findLocal(int locationCode) {
+        return teamMapper.findLocal(locationCode);
     }
 }
