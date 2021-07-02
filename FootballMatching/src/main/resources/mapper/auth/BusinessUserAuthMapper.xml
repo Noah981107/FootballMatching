@@ -28,7 +28,7 @@
 
     <!--자신의 정보 조회-->
     <select id="inquiry" parameterType="string" resultType="domain.BusinessUsers">
-        SELECT a.id, a.name, a.phoneNumber, b.name as field_name
+        SELECT a.id, a.name, a.phoneNumber, b.name as fieldName
         FROM footballMatching.business_user as a
         LEFT JOIN footballMatching.field as b
         ON a.field_id = b.id

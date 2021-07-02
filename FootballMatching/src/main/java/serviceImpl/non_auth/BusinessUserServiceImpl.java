@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import repository.non_auth.BusinessUserMapper;
 import repository.non_auth.FieldMapper;
 import service.non_auth.BusinessUserService;
+import util.JwtUtil;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Service
@@ -18,6 +21,9 @@ public class BusinessUserServiceImpl implements BusinessUserService {
 
     @Autowired
     private FieldMapper fieldMapper;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     // id 중복 체크
     @Override
@@ -37,6 +43,30 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         return fieldMapper.checkFieldName(fieldName);
     }
 
+    // 구장 중복 확인
+    @Override
+    public String checkFieldId(int fieldId) {
+        return bUserMapper.checkFieldId(fieldId);
+    }
+
+    //토큰 발급
+
+    @Override
+    public String tokenIssued(String id) {
+        String returnId = checkId(id);
+        if(returnId == null || returnId.isEmpty()){
+            try {
+                throw new Exception("There is no such id");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "ID is None";
+            }
+        }
+        else{
+            return jwtUtil.tokenIssued(returnId);
+        }
+    }
+
     // 회원가입
     @Override
     public String signUp(BusinessUsers bUser) {
@@ -46,10 +76,17 @@ public class BusinessUserServiceImpl implements BusinessUserService {
             if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){
                 int returnFieldId = checkFieldName(bUser.getFieldName());
                 if(returnFieldId > 0){
-                    bUser.setPassword(BCrypt.hashpw(bUser.getPassword(), BCrypt.gensalt()));
-                    bUser.setFieldName(Integer.toString(returnFieldId));
-                    bUserMapper.signUp(bUser);
-                    return "Membership Success";
+                    String overlapFieldId = checkFieldId(returnFieldId);
+                    if(overlapFieldId == null || overlapFieldId.isEmpty()){
+                        bUser.setJoinDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+                        bUser.setPassword(BCrypt.hashpw(bUser.getPassword(), BCrypt.gensalt()));
+                        bUser.setFieldName(Integer.toString(returnFieldId));
+                        bUserMapper.signUp(bUser);
+                        return "Membership Success";
+                    }
+                    else{
+                        return "There are field with duplicate field_id";
+                    }
                 }
                 else{
                     return "The selected stadium does not exist.";
@@ -70,7 +107,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         BusinessUsers returnBUser = bUserMapper.signIn(bUser);
         if(returnBUser != null){
             if(BCrypt.checkpw(bUser.getPassword(), returnBUser.getPassword())){
-                return "Login Success";
+                return "Login Success\n" + tokenIssued(bUser.getId());
             }
             else{
                 return "Login Failed";
@@ -88,7 +125,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("name", name);
         map.put("phoneNumber", phoneNumber);
-        map.put("field_id", Integer.toString(returnFieldId));
+        map.put("field_id", returnFieldId);
         String returnId = bUserMapper.findId(map);
         if (returnId == null || returnId.isEmpty()){
             return "The memeber ID you are looking for cannot be found";

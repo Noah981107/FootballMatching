@@ -9,6 +9,10 @@ public interface BusinessUserService {
 
     int checkFieldName(String fieldName); // 구장 확인
 
+    String checkFieldId(int fieldId); // 구장 중복 확인
+
+    String tokenIssued(String id);
+
     String signUp(BusinessUsers bUser); // 회원가입
 
     String signIn(BusinessUsers bUser); // 로그인

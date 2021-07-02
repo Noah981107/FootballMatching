@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.non_auth.TeamMapper">
+
+    <!--팀 전체 조회-->
+    <select id="teamList" resultType="domain.Team">
+        SELECT a.name, b.id as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
+        FROM footballMatching.team as a
+        LEFT JOIN footballMatching.user as b
+        ON a.user_idx = b.idx;
+    </select>
+
+    <!--팀 이름으로 팀 조회-->
+    <select id ="findName" parameterType="string" resultType="domain.Team">
+        SELECT a. name, b.id as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
+        FROM footballMatching.team as a
+        LEFT JOIN footballMatching.user as b
+        ON a.user_idx = b.idx
+        WHERE a.name = #{teamName};
+    </select>
+</mapper>

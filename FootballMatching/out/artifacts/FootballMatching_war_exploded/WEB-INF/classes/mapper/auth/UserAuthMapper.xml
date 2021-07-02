@@ -28,7 +28,7 @@
 
     <!--자신의 정보 조회-->
     <select id="inquiry" parameterType="string" resultType="domain.Users">
-        SELECT id, name, phoneNumber, location_code, joinDate FROM footballMatching.user WHERE id =#{id};
+        SELECT id, name, phoneNumber, location_code as locationCode, joinDate FROM footballMatching.user WHERE id =#{id};
     </select>
 
     <!--회원 탈퇴-->

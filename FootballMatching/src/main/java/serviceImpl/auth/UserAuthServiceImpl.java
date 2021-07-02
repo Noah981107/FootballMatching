@@ -53,6 +53,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         return "hi";
     }
 
+    // 자신의 정보 조회
     @Override
     public Users inquiry(String token) {
         String id = jwtUtil.getId(token);

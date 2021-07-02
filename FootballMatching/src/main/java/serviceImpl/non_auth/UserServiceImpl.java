@@ -8,6 +8,8 @@ import repository.non_auth.UserMapper;
 import service.non_auth.UserService;
 import util.JwtUtil;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Service
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
         if (returnId == null || returnId.isEmpty()){
             String returnPhoneNumber = checkPhoneNumber(user.getPhoneNumber());
             if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){
+                user.setJoinDate(Timestamp.valueOf(LocalDateTime.now()).toString());
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 userMapper.signUp(user);
                 return "Membership Success";
@@ -72,10 +75,10 @@ public class UserServiceImpl implements UserService {
     // 로그인
     @Override
     public String signIn(Users user) {
-        Users returnUser = userMapper.signIn(user);
-        if(returnUser != null){
-            if(BCrypt.checkpw(user.getPassword(), returnUser.getPassword())){
-                return tokenIssued(returnUser.getId());
+        String returnPassword = userMapper.signIn(user);
+        if(returnPassword != null){
+            if(BCrypt.checkpw(user.getPassword(), returnPassword)){
+                return "Login Success\n" + tokenIssued(user.getId());
             }
             else {
                 return "login failed";
@@ -106,6 +109,7 @@ public class UserServiceImpl implements UserService {
     public Users lookUp(Users user) {
         Users returnUser = userMapper.lookUp(user);
         if(returnUser != null){
+            returnUser.getJoinDate();
             returnUser.setPassword("0");
             return returnUser;
         }

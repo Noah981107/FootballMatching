@@ -1,5 +1,7 @@
 package domain;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Users {
@@ -9,7 +11,7 @@ public class Users {
     protected String name;
     protected String phoneNumber;
     protected int locationCode;
-    protected Date joinDate;
+    protected String joinDate;
     protected Boolean isDeleted;
 
     public String getId() {
@@ -52,11 +54,11 @@ public class Users {
         this.locationCode = locationCode;
     }
 
-    public Date getJoinDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
 

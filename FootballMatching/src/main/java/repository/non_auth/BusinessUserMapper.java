@@ -10,6 +10,7 @@ import java.util.Map;
 public interface BusinessUserMapper {
     String checkId(String id); // 아이디 중복 검사
     String checkPhoneNumber(String phoneNumber); // 전화번호 중복 검사
+    String checkFieldId(int fieldId); // 구장 중복 확인
     void signUp(BusinessUsers bUser); // 회원가입
     BusinessUsers signIn(BusinessUsers bUser); // 로그인
     String findId(Map map); // ID 찾기

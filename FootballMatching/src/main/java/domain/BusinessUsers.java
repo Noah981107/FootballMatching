@@ -1,5 +1,7 @@
 package domain;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class BusinessUsers {
@@ -9,7 +11,7 @@ public class BusinessUsers {
     protected String name;
     protected String phoneNumber;
     protected String fieldName;
-    protected Date joinDate;
+    protected String joinDate;
     protected Boolean isDeleted;
 
     public String getId() {
@@ -52,11 +54,11 @@ public class BusinessUsers {
         this.fieldName = fieldName;
     }
 
-    public Date getJoinDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
 
