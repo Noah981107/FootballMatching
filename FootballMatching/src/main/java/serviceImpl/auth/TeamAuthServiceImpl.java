@@ -10,6 +10,8 @@ import util.JwtUtil;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class TeamAuthServiceImpl implements TeamAuthService {
@@ -31,5 +33,31 @@ public class TeamAuthServiceImpl implements TeamAuthService {
         team.setRepresentative(idx);
         team.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamAuthMapper.registration(team);
+    }
+
+    //내가 등록한 팀 조회
+    @Override
+    public List<Team> myTeam(String token) {
+        String id = jwtUtil.getId(token);
+        return teamAuthMapper.myTeam(id);
+    }
+
+    @Override
+    public void deletion(String token, String teamName) {
+        String id = jwtUtil.getId(token);
+        String idx = userMapper.findIdx(id);
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("idx", idx);
+        map.put("teamName", teamName);
+        teamAuthMapper.deletion(map);
+    }
+
+    @Override
+    public void modification(String token, Team team) {
+        String id = jwtUtil.getId(token);
+        String idx = userMapper.findIdx(id);
+        team.setRepresentative(idx);
+        team.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+        teamAuthMapper.modification(team);
     }
 }
