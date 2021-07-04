@@ -1,6 +1,6 @@
 package domain.board;
 
-public class TeamRecruitmentBoard {
+public class PlayerBoard {
     protected String writer;
     protected String teamName;
     protected String postDate;

@@ -8,34 +8,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import service.non_auth.board.TeamRecruitmentBoardService;
+import service.non_auth.board.PlayerBoardService;
 
 @Controller
-@RequestMapping(value = "/team-recruitment-board")
-public class TeamRecruitmentBoard {
+@RequestMapping(value ="player-board")
+public class PlayerBoardController {
 
     @Autowired
-    private TeamRecruitmentBoardService teamRecruitmentBoardService;
+    private PlayerBoardService playerBoardService;
 
-    //팀 모집 게시판 전체 보기
+    //용병 모집 게시판 전체 보기
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity teamRecruitmentList(){
-        return new ResponseEntity(teamRecruitmentBoardService.teamRecruitmentList(), HttpStatus.OK);
+    public ResponseEntity list(){
+        return new ResponseEntity(playerBoardService.list(), HttpStatus.OK);
     }
 
     //팀 이름으로 조회
     @ResponseBody
     @RequestMapping(value = "/finding-name", method = RequestMethod.GET)
     public ResponseEntity teamName(@RequestParam(value = "team-name") String teamName){
-        return new ResponseEntity(teamRecruitmentBoardService.teamName(teamName), HttpStatus.OK);
+        return new ResponseEntity(playerBoardService.findName(teamName), HttpStatus.OK);
     }
 
     //작성자 이름으로 조회
     @ResponseBody
     @RequestMapping(value = "finding-writer", method = RequestMethod.GET)
     public ResponseEntity writer(@RequestParam(value = "writer") String writer){
-        return new ResponseEntity(teamRecruitmentBoardService.writer(writer), HttpStatus.OK);
+        return new ResponseEntity(playerBoardService.findWriter(writer), HttpStatus.OK);
     }
-
 }
