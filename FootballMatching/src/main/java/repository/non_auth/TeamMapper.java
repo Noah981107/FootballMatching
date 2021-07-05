@@ -10,4 +10,5 @@ public interface TeamMapper {
     Team findName(String teamName); // 팀 이름으로 팀 찾기
     List<Team> teamList(); // 팀 전체 조회
     List<Team> findLocal(int locationCode); // 지역별 팀 조회
+    String findId(String name);
 }

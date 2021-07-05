@@ -30,4 +30,10 @@
         ON a.user_idx = b.idx
         WHERE a.location_code = #{locationCode};
     </select>
+
+    <!--팀 id 찾기-->
+    <select id="findId" parameterType="string" resultType="string">
+        SELECT id FROM footballMatching.team
+        WHERE name = #{name};
+    </select>
 </mapper>
