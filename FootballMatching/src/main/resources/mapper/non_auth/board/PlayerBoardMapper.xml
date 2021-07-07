@@ -7,7 +7,7 @@
 
     <select id="list" resultType="domain.board.PlayerBoard">
         SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
-        FROM footballmatching.player_recruitment_board AS a
+        FROM footballmatching.player_board AS a
                  LEFT JOIN footballmatching.user AS b
                            ON a.user_idx = b.idx
                  LEFT JOIN footballmatching.team AS c
@@ -16,7 +16,7 @@
 
     <select id = "findName" parameterType="string" resultType = "domain.board.PlayerBoard">
         SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
-        FROM footballmatching.player_recruitment_board AS a
+        FROM footballmatching.player_board AS a
                  LEFT JOIN footballmatching.user AS b
                            ON a.user_idx = b.idx
                  LEFT JOIN footballmatching.team AS c
@@ -26,7 +26,7 @@
 
     <select id = "findWriter" parameterType="string" resultType = "domain.board.PlayerBoard">
         SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
-        FROM footballmatching.player_recruitment_board AS a
+        FROM footballmatching.player_board AS a
                  LEFT JOIN footballmatching.user AS b
                            ON a.user_idx = b.idx
                  LEFT JOIN footballmatching.team AS c

@@ -33,7 +33,7 @@ public class TeamBoardController {
 
     //작성자 이름으로 조회
     @ResponseBody
-    @RequestMapping(value = "finding-writer", method = RequestMethod.GET)
+    @RequestMapping(value = "/finding-writer", method = RequestMethod.GET)
     public ResponseEntity writer(@RequestParam(value = "writer") String writer){
         return new ResponseEntity(teamBoardService.findWriter(writer), HttpStatus.OK);
     }

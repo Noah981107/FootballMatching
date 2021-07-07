@@ -26,6 +26,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity signIn(@RequestBody Users user){
+        System.out.println("id" +  user.getId());
+        System.out.println("pw" + user.getPassword());
         return new ResponseEntity(userService.signIn(user),HttpStatus.OK);
     }
 

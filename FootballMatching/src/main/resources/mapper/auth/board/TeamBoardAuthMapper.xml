@@ -5,17 +5,17 @@
 
 <mapper namespace="repository.auth.board.TeamBoardAuthMapper">
     <insert id="write" parameterType="domain.board.TeamBoard">
-        INSERT INTO footballMatching.team_recruitment_board
+        INSERT INTO footballMatching.team_board
         (user_idx, team_id, postDate, content)
         VALUES (#{writer}, #{teamName}, #{postDate}, #{content});
     </insert>
     <update id="modification" parameterType="domain.board.TeamBoard">
-        UPDATE footballMatching.team_recruitment_board
+        UPDATE footballMatching.team_board
         SET content = #{content}, modifiedDate = #{modifiedDate}
         WHERE user_idx = #{writer} AND team_id = #{teamName};
     </update>
     <update id="deletion" parameterType="domain.board.TeamBoard">
-        UPDATE footballMatching.team_recruitment_board
+        UPDATE footballMatching.team_board
         SET is_deleted = 1
         WHERE user_idx = #{writer} AND team_id = #{teamName};
     </update>

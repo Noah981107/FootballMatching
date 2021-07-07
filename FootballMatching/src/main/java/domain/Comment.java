@@ -1,21 +1,12 @@
-package domain.board;
+package domain;
 
-public class TeamBoard {
-    protected String id;
+public class Comment {
     protected String writer;
-    protected String teamName;
+    protected String boardNumber;
     protected String postDate;
     protected String modifiedDate;
     protected String content;
-    protected Boolean isDeleted;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    protected Boolean is_deleted;
 
     public String getWriter() {
         return writer;
@@ -25,12 +16,12 @@ public class TeamBoard {
         this.writer = writer;
     }
 
-    public String getTeamName() {
-        return teamName;
+    public String getBoardNumber() {
+        return boardNumber;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setBoardNumber(String boardNumber) {
+        this.boardNumber = boardNumber;
     }
 
     public String getPostDate() {
@@ -57,11 +48,11 @@ public class TeamBoard {
         this.content = content;
     }
 
-    public Boolean getDeleted() {
-        return isDeleted;
+    public Boolean getIs_deleted() {
+        return is_deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+    public void setIs_deleted(Boolean is_deleted) {
+        this.is_deleted = is_deleted;
     }
 }

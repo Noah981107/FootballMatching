@@ -74,18 +74,18 @@ public class UserServiceImpl implements UserService {
 
     // 로그인
     @Override
-    public String signIn(Users user) {
+    public Users signIn(Users user) {
         String returnPassword = userMapper.signIn(user);
         if(returnPassword != null){
             if(BCrypt.checkpw(user.getPassword(), returnPassword)){
-                return "Login Success\n" + tokenIssued(user.getId());
+                return user/*"Login Success"\n" + tokenIssued(user.getId())*/;
             }
             else {
-                return "login failed";
+                return null /*"login failed"*/;
             }
         }
         else {
-            return "ID does not match";
+            return null /* "ID does not match"*/;
         }
     }
 

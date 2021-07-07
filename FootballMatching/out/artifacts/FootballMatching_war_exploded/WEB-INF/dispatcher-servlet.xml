@@ -26,10 +26,19 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
+    <aop:aspectj-autoproxy />
+
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**" />
             <bean class="interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class = "interceptor.CorsInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
