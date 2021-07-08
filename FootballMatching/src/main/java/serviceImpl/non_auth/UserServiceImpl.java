@@ -1,6 +1,8 @@
 package serviceImpl.non_auth;
 
 import domain.Users;
+import exception.ErrorCode;
+import exception.UserException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,68 +38,77 @@ public class UserServiceImpl implements UserService {
 
     // 토큰 발급
     @Override
-    public String tokenIssued(String id) {
-        String returnId = checkId(id);
-        if(returnId == null || returnId.isEmpty()){
-            try {
-                throw new Exception("There is no such id");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "ID is None";
-            }
+    public String tokenIssued(String id) throws Exception {
+        String returnId = checkId(id); // id 확인
+        if(returnId == null || returnId.isEmpty()){ // id가 없으면
+            throw new UserException(ErrorCode.Id_Does_Not_Exists);
         }
         else{
-            return jwtUtil.tokenIssued(returnId);
+            return jwtUtil.tokenIssued(returnId); // id에 따른 토큰 발급
         }
     }
 
     // 회원 가입
     @Override
-    public String signUp(Users user) {
-        String returnId  = checkId(user.getId());
-        if (returnId == null || returnId.isEmpty()){
-            String returnPhoneNumber = checkPhoneNumber(user.getPhoneNumber());
-            if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){
-                user.setJoinDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+    public void signUp(Users user) throws Exception {
+        if(user.getId() == null || user.getId().equals("string")){
+            throw new UserException(ErrorCode.Id_Is_Empty);
+        }
+        if(user.getPassword() == null || user.getPassword().equals("string")){
+            throw new UserException(ErrorCode.Password_Is_Empty);
+        }
+        if(user.getPhoneNumber() == null || user.getPhoneNumber().equals("string")){
+            throw new UserException(ErrorCode.PhoneNumber_Is_Empty);
+        }
+        String returnId  = checkId(user.getId()); // id 중복 확인
+        if (returnId == null || returnId.isEmpty()){ // 중복된 id가 없을 때
+            String returnPhoneNumber = checkPhoneNumber(user.getPhoneNumber()); // 휴대전화번호 중복 확인
+            if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){ // 중복된 휴대전화번호가 없을 때때
+                user.setJoinDate(Timestamp.valueOf(LocalDateTime.now()).toString()); // 가입날짜 저장
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt())); // 비밀번호 저장
                 userMapper.signUp(user);
-                return "Membership Success";
             }
             else{
-                return "There are members with duplicate phone numbers.";
+                throw new UserException(ErrorCode.PhoneNumber_Already_Exists);
             }
         }
         else{
-            return "There is a member with a duplicate ID.";
+            throw new UserException(ErrorCode.Id_Already_Exists);
         }
     }
 
     // 로그인
     @Override
-    public Users signIn(Users user) {
+    public String signIn(Users user) throws Exception{
+        if(user.getId() == null || user.getId().equals("string")) {
+            throw new UserException(ErrorCode.Id_Is_Empty);
+        }
+        if(user.getPassword() == null || user.getPassword().equals("string")){
+            throw new UserException(ErrorCode.Password_Is_Empty);
+        }
         String returnPassword = userMapper.signIn(user);
         if(returnPassword != null){
             if(BCrypt.checkpw(user.getPassword(), returnPassword)){
-                return user/*"Login Success"\n" + tokenIssued(user.getId())*/;
+                return tokenIssued(user.getId());
             }
             else {
-                return null /*"login failed"*/;
+                throw new UserException(ErrorCode.Password_Does_Not_Match);
             }
         }
         else {
-            return null /* "ID does not match"*/;
+            throw new UserException(ErrorCode.Id_Does_Not_Match);
         }
     }
 
     // ID 찾기
     @Override
-    public String findId(String name, String phoneNumber) {
+    public String findId(String name, String phoneNumber) throws Exception {
         HashMap<String, Object> map = new HashMap<String,Object>();
         map.put("name", name);
         map.put("phoneNumber", phoneNumber);
         String returnId = userMapper.findId(map);
         if (returnId == null || returnId.isEmpty()){
-            return "The memeber ID you are looking for cannot be found";
+            throw new UserException(ErrorCode.Id_Does_Not_Exists);
         }
         else {
             return returnId;
@@ -106,14 +117,24 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 찾기 - id, 전화번호, 이름 일치 여부 파악
     @Override
-    public Users lookUp(Users user) {
+    public Users lookUp(Users user) throws Exception {
+        if(user.getId() == null || user.getId().equals("string")){
+            throw new UserException(ErrorCode.Id_Is_Empty);
+        }
+        if(user.getPhoneNumber() == null || user.getPhoneNumber().equals("string")){
+            throw new UserException(ErrorCode.PhoneNumber_Is_Empty);
+        }
+        if(user.getName() == null || user.getName().equals("string")){
+            throw new UserException(ErrorCode.Name_Is_Empty);
+        }
         Users returnUser = userMapper.lookUp(user);
         if(returnUser != null){
-            returnUser.getJoinDate();
             returnUser.setPassword("0");
             return returnUser;
         }
-        return null;
+        else {
+            throw new UserException(ErrorCode.Member_Dose_Not_Exists);
+        }
     }
 
     // 비밀번호 찾기 - 비밀번호 변경

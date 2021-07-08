@@ -33,7 +33,7 @@
 
     <!--비밀번호 찾기 - id, 전화번호, 이름 일치 여부 파악-->
     <select id="lookUp" parameterType="domain.Users" resultType="domain.Users">
-        SELECT id, password, name, phoneNumber,location_code as locationCode FROM footballMatching.user WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber};
+        SELECT id, password, name, phoneNumber, location_code as locationCode FROM footballMatching.user WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber};
     </select>
 
     <!--비밀번호 찾기 - 비밀번호 변경-->

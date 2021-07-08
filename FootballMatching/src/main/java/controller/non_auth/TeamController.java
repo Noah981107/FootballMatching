@@ -1,5 +1,6 @@
 package controller.non_auth;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class TeamController {
     //팀 전체 보기
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ApiOperation(value = "등록된 팀 전체 보기", notes = "등록된 팀 전체를 조회합니다.")
     public ResponseEntity teamList(){
         return new ResponseEntity(teamService.teamList(),HttpStatus.OK);
     }
