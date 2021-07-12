@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.auth.comment.TeamBoardCommentAuthMapper">
+
+    <insert id="register" parameterType="domain.Comment">
+        INSERT INTO footballMatching.team_board_comment (user_idx, board_id, postDate,content)
+        VALUES(#{writer}, #{boardNumber}, #{postDate}, #{content})
+    </insert>
+
+    <update id="modification" parameterType="domain.Comment">
+        UPDATE footballMatching.team_board_comment
+        SET modifiedDate = #{modifiedDate}, content = #{content}
+        WHERE user_idx = #{writer} AND board_id = #{boardNumber}
+    </update>
+</mapper>
