@@ -28,6 +28,8 @@ public enum ErrorCode{
     //Team-Board
     Registered_Post_Is_Empty("TEAMBOARD_ERROR_01", "등록된 게시물이 없습니다.",HttpStatus.BAD_REQUEST),
 
+    //Comment
+    Registered_Comment_Is_Empty("COMMENT_ERROR_01", "등록된 댓글이 없습니다.", HttpStatus.BAD_REQUEST),
 
     ;
 

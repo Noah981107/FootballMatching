@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.non_auth.comment.TeamBoardCommentMapper">
+
+    <select id="comments" parameterType="string" resultType="domain.Comment">
+        SELECT user_idx as writer, postDate, modifiedDate, content
+        FROM footballMatching.team_board_comment
+        WHERE board_id = #{id};
+    </select>
+
+</mapper>
