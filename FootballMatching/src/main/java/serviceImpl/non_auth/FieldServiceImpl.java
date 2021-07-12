@@ -1,6 +1,8 @@
 package serviceImpl.non_auth;
 
 import domain.Fields;
+import exception.ErrorCode;
+import exception.FieldException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.non_auth.FieldMapper;
@@ -17,12 +19,12 @@ public class FieldServiceImpl implements FieldService {
     //지역 코드별 구장 검색
     @Override
     public List<Fields> searchField(int locationCode) {
-        int result = fieldMapper.checkLocationCode(locationCode);
-        if(result > 0){
-            return fieldMapper.searchField(locationCode);
+        List<Fields> result = fieldMapper.searchField(locationCode);
+        if(result.isEmpty()){
+            throw new FieldException(ErrorCode.Registered_Field_Is_Empty);
         }
         else{
-            return null;
+            return result;
         }
     }
 }

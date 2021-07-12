@@ -2,7 +2,7 @@ package exception;
 
 import org.springframework.http.HttpStatus;
 
-public class MyException extends Exception {
+public class MyException extends RuntimeException {
 
     private String code;
     private HttpStatus httpStatus;
@@ -10,9 +10,6 @@ public class MyException extends Exception {
 
     public MyException(ErrorCode errorCode) {
         super(errorCode.getMessage());
-        this.code = errorCode.getCode();
-        this.httpStatus = errorCode.getHttpStatus();
-        this.name = this.getClass().getName();
     }
 
     public String getCode() {

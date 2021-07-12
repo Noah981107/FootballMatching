@@ -1,6 +1,8 @@
 package serviceImpl.non_auth.board;
 
 import domain.board.PlayerBoard;
+import exception.ErrorCode;
+import exception.TeamBoardException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.non_auth.board.PlayerBoardMapper;
@@ -16,16 +18,28 @@ public class PlayerBoardServiceImpl implements PlayerBoardService {
 
     @Override
     public List<PlayerBoard> list() {
-        return playerBoardMapper.list();
+        List<PlayerBoard> result = playerBoardMapper.list();
+        if(result.isEmpty()){
+            throw new TeamBoardException(ErrorCode.Registered_Post_Is_Empty);
+        }
+        return result;
     }
 
     @Override
     public List<PlayerBoard> findName(String teamName) {
-        return playerBoardMapper.findName(teamName);
+        List<PlayerBoard> result = playerBoardMapper.findName(teamName);
+        if(result.isEmpty()){
+            throw new TeamBoardException(ErrorCode.Registered_Post_Is_Empty);
+        }
+        return result;
     }
 
     @Override
     public List<PlayerBoard> findWriter(String writer) {
-        return playerBoardMapper.findWriter(writer);
+        List<PlayerBoard> result = playerBoardMapper.findWriter(writer);
+        if(result.isEmpty()){
+            throw new TeamBoardException(ErrorCode.Registered_Post_Is_Empty);
+        }
+        return result;
     }
 }

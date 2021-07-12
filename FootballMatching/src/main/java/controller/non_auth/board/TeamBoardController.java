@@ -1,5 +1,6 @@
 package controller.non_auth.board;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,15 @@ public class TeamBoardController {
     //팀 모집 게시판 전체 보기
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity list(){
+    @ApiOperation(value = "팀 모집 게시판 전체 보기", notes ="팀 모집 게시판 전체를 보여줍니다.")
+    public ResponseEntity list() throws Exception{
         return new ResponseEntity(teamBoardService.list(), HttpStatus.OK);
     }
 
     //팀 이름으로 조회
     @ResponseBody
     @RequestMapping(value = "/finding-name", method = RequestMethod.GET)
+    @ApiOperation(value = "팀 이름으로 조회", notes = "팀 이름을 입력해야 합니다.")
     public ResponseEntity teamName(@RequestParam(value = "team-name") String teamName){
         return new ResponseEntity(teamBoardService.findName(teamName), HttpStatus.OK);
     }
@@ -34,6 +37,7 @@ public class TeamBoardController {
     //작성자 이름으로 조회
     @ResponseBody
     @RequestMapping(value = "/finding-writer", method = RequestMethod.GET)
+    @ApiOperation(value = "작성자 이름으로 조회", notes = "작성자 이름을 입력해야 합니다.")
     public ResponseEntity writer(@RequestParam(value = "writer") String writer){
         return new ResponseEntity(teamBoardService.findWriter(writer), HttpStatus.OK);
     }

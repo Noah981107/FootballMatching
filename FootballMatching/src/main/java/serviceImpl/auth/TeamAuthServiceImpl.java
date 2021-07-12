@@ -1,6 +1,8 @@
 package serviceImpl.auth;
 
 import domain.Team;
+import exception.ErrorCode;
+import exception.TeamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.auth.TeamAuthMapper;
@@ -39,9 +41,16 @@ public class TeamAuthServiceImpl implements TeamAuthService {
     @Override
     public List<Team> myTeam(String token) {
         String id = jwtUtil.getId(token);
-        return teamAuthMapper.myTeam(id);
+        List<Team> result = teamAuthMapper.myTeam(id);
+        if(result.isEmpty()){
+            throw new TeamException(ErrorCode.Team_Is_Empty);
+        }
+        else{
+            return result;
+        }
     }
 
+    //팀 삭제
     @Override
     public void deletion(String token, String teamName) {
         String id = jwtUtil.getId(token);
@@ -52,6 +61,7 @@ public class TeamAuthServiceImpl implements TeamAuthService {
         teamAuthMapper.deletion(map);
     }
 
+    // 팀 수정
     @Override
     public void modification(String token, Team team) {
         String id = jwtUtil.getId(token);

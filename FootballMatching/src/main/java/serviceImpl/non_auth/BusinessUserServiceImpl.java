@@ -1,6 +1,9 @@
 package serviceImpl.non_auth;
 
 import domain.BusinessUsers;
+import exception.BusinessUserException;
+import exception.ErrorCode;
+import exception.FieldException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import repository.non_auth.FieldMapper;
 import service.non_auth.BusinessUserService;
 import util.JwtUtil;
 
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -50,7 +54,6 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     }
 
     //토큰 발급
-
     @Override
     public String tokenIssued(String id) {
         String returnId = checkId(id);
@@ -69,75 +72,97 @@ public class BusinessUserServiceImpl implements BusinessUserService {
 
     // 회원가입
     @Override
-    public String signUp(BusinessUsers bUser) {
-        String returnId = checkId(bUser.getId());
-        if(returnId == null || returnId.isEmpty()){
-            String returnPhoneNumber = checkPhoneNumber(bUser.getPhoneNumber());
-            if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){
-                int returnFieldId = checkFieldName(bUser.getFieldName());
-                if(returnFieldId > 0){
-                    String overlapFieldId = checkFieldId(returnFieldId);
+    public void signUp(BusinessUsers bUser) throws Exception {
+        if(bUser.getId() == null || bUser.getId().equals("string")){
+            throw new BusinessUserException(ErrorCode.Id_Is_Empty);
+        }
+        if(bUser.getPassword() == null || bUser.getPassword().equals("string")){
+            throw new BusinessUserException(ErrorCode.Password_Is_Empty);
+        }
+        if(bUser.getPhoneNumber() == null || bUser.getPhoneNumber().equals("string")){
+            throw new BusinessUserException(ErrorCode.PhoneNumber_Is_Empty);
+        }
+        if(bUser.getFieldName() == null || bUser.getFieldName().equals("string")){
+            throw new BusinessUserException(ErrorCode.Field_Name_Is_Empty);
+        }
+        String returnId = checkId(bUser.getId()); // id 중복 확인
+        if(returnId == null || returnId.isEmpty()){ // id가 중복되지 않았을때
+            String returnPhoneNumber = checkPhoneNumber(bUser.getPhoneNumber()); // 휴대전화번호 중복 확인
+            if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){ // 휴대전화번호가 중복되지 않았을 때
+                int returnFieldId = checkFieldName(bUser.getFieldName()); // 구장 이름에 따른 구장 번호 조회
+                if(returnFieldId > 0){ // 구장 번호가 있을 경우
+                    String overlapFieldId = checkFieldId(returnFieldId); // 구장 중복 확인
                     if(overlapFieldId == null || overlapFieldId.isEmpty()){
                         bUser.setJoinDate(Timestamp.valueOf(LocalDateTime.now()).toString());
                         bUser.setPassword(BCrypt.hashpw(bUser.getPassword(), BCrypt.gensalt()));
                         bUser.setFieldName(Integer.toString(returnFieldId));
                         bUserMapper.signUp(bUser);
-                        return "Membership Success";
                     }
                     else{
-                        return "There are field with duplicate field_id";
+                        throw new FieldException(ErrorCode.Filed_Already_Exists);
                     }
                 }
                 else{
-                    return "The selected stadium does not exist.";
+                    throw new FieldException(ErrorCode.Registered_Field_Is_Empty);
                 }
             }
             else{
-                return "There are members with duplicate phone numbers.";
+                throw new BusinessUserException(ErrorCode.PhoneNumber_Already_Exists);
             }
         }
         else {
-            return "There is a member with a duplicate ID.";
+            throw new BusinessUserException(ErrorCode.Id_Already_Exists);
         }
     }
 
     //로그인
     @Override
-    public String signIn(BusinessUsers bUser) {
+    public String signIn(BusinessUsers bUser) throws Exception {
+        if(bUser.getId() == null || bUser.getId().equals("string")){
+            throw new BusinessUserException(ErrorCode.Id_Is_Empty);
+        }
+        if(bUser.getPassword() == null || bUser.getPassword().equals("string")){
+            throw new BusinessUserException(ErrorCode.Password_Is_Empty);
+        }
         BusinessUsers returnBUser = bUserMapper.signIn(bUser);
         if(returnBUser != null){
             if(BCrypt.checkpw(bUser.getPassword(), returnBUser.getPassword())){
-                return "Login Success\n" + tokenIssued(bUser.getId());
+                return tokenIssued(bUser.getId());
             }
             else{
-                return "Login Failed";
+                throw new BusinessUserException(ErrorCode.Password_Does_Not_Match);
             }
         }
         else{
-            return "ID does not match";
+            throw new BusinessUserException(ErrorCode.Id_Does_Not_Match);
         }
     }
 
     // ID 찾기
     @Override
-    public String findId(String name, String phoneNumber, String fieldName) {
+    public String findId(String name, String phoneNumber, String fieldName) throws Exception {
         int returnFieldId = checkFieldName(fieldName);
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("name", name);
-        map.put("phoneNumber", phoneNumber);
-        map.put("field_id", returnFieldId);
-        String returnId = bUserMapper.findId(map);
-        if (returnId == null || returnId.isEmpty()){
-            return "The memeber ID you are looking for cannot be found";
+        if(returnFieldId<0){
+            throw new BusinessUserException(ErrorCode.Registered_Field_Is_Empty);
         }
-        else {
-            return returnId;
+        else{
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("name", name);
+            map.put("phoneNumber", phoneNumber);
+            map.put("field_id", returnFieldId);
+            String returnId = bUserMapper.findId(map);
+            if (returnId == null || returnId.isEmpty()){
+               throw new BusinessUserException(ErrorCode.Id_Does_Not_Exists);
+            }
+            else {
+                return returnId;
+            }
         }
     }
 
     // 비밀번호 찾기 - id, 전화번호, 이름, 구장 이름 일치 여부 파악
     @Override
-    public BusinessUsers lookUp(BusinessUsers bUser) {
+    public BusinessUsers lookUp(BusinessUsers bUser) throws Exception {
         int returnFieldId = checkFieldName(bUser.getFieldName());
         if(returnFieldId>0){
             bUser.setFieldName(Integer.toString(returnFieldId));
@@ -147,11 +172,11 @@ public class BusinessUserServiceImpl implements BusinessUserService {
                 return returnBUser;
             }
             else{
-                return null;
+                throw new BusinessUserException(ErrorCode.Member_Dose_Not_Exists);
             }
         }
         else{
-            return null;
+            throw new FieldException(ErrorCode.Registered_Field_Is_Empty);
         }
     }
 

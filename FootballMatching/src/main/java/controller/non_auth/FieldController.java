@@ -1,5 +1,6 @@
 package controller.non_auth;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class FieldController {
     // 지역별 구장 조회
     @ResponseBody
     @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @ApiOperation(value = "지역별 구장 조회", notes = "지역별 구장을 전체 조회합니다.")
     public ResponseEntity searchField(@RequestParam(value = "location-code") int locationCode){
         return new ResponseEntity(fieldService.searchField(locationCode), HttpStatus.OK);
     }

@@ -6,6 +6,7 @@ import exception.UserException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import repository.non_auth.UserMapper;
 import service.non_auth.UserService;
 import util.JwtUtil;
@@ -118,6 +119,7 @@ public class UserServiceImpl implements UserService {
     // 비밀번호 찾기 - id, 전화번호, 이름 일치 여부 파악
     @Override
     public Users lookUp(Users user) throws Exception {
+
         if(user.getId() == null || user.getId().equals("string")){
             throw new UserException(ErrorCode.Id_Is_Empty);
         }
