@@ -42,4 +42,6 @@ public class TeamBoardController {
         return new ResponseEntity(teamBoardService.findWriter(writer), HttpStatus.OK);
     }
 
+
+
 }

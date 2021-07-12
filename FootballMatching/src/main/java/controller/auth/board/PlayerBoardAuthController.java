@@ -20,7 +20,7 @@ public class PlayerBoardAuthController {
     // 팀 모집 게시물 작성
     @ResponseBody
     @RequestMapping(value = "/write", method = RequestMethod.POST)
-    @ApiOperation(value = "용병 모집 게시물 작성", notes = "용병 모집 게시물을 작성합니다.")
+    @ApiOperation(value = "용병 모집 게시물 작성", notes = "팀 이름, 내용을 입력합니다.")
     public void write(@RequestHeader(value = "Authorization") String token, @RequestBody PlayerBoard playerBoard){
         playerBoardAuthService.write(token, playerBoard);
     }
@@ -28,7 +28,7 @@ public class PlayerBoardAuthController {
     // 팀 모집 게시물 수정
     @ResponseBody
     @RequestMapping(value = "/modification", method = RequestMethod.PATCH)
-    @ApiOperation(value = "용병 모집 게시물 수정", notes = "용병 모집 게시물을 수정합니다.")
+    @ApiOperation(value = "용병 모집 게시물 수정", notes = "팀 이름, 내용을 입력합니다.")
     public void modification(@RequestHeader(value = "Authorization") String token, @RequestBody PlayerBoard playerBoard){
         playerBoardAuthService.modification(token, playerBoard);
     }

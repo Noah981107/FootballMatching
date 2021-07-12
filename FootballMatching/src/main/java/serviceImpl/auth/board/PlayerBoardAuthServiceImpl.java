@@ -36,6 +36,7 @@ public class PlayerBoardAuthServiceImpl implements PlayerBoardAuthService {
         String id = teamMapper.findId(playerBoard.getTeamName());
         playerBoard.setTeamName(id);
         playerBoard.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+        System.out.println(playerBoard);
         playerBoardAuthMapper.write(playerBoard);
     }
 
