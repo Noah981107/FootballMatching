@@ -8,22 +8,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import service.auth.comment.TeamBoardCommentAuthService;
+import service.auth.comment.PlayerBoardCommentAuthService;
 
 @Controller
-@RequestMapping(value = "/team-board-comment")
+@RequestMapping(value = "/player-board-comment")
 @UserAuth
-public class TeamBoardCommentAuthController {
+public class PlayerBoardCommentAuthController {
 
     @Autowired
-    private TeamBoardCommentAuthService teamBoardCommentAuthService;
+    private PlayerBoardCommentAuthService playerBoardCommentAuthService;
 
     //댓글 생성
     @ResponseBody
     @RequestMapping(value = "/registeration", method = RequestMethod.POST)
     @ApiOperation(value ="댓글 생성", notes = "게시글 번호, 내용을 입력합니다.")
     public ResponseEntity register(@RequestHeader(value = "Authorization") String token, @RequestBody Comment comment){
-        teamBoardCommentAuthService.register(token, comment);
+        playerBoardCommentAuthService.register(token, comment);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -33,7 +33,7 @@ public class TeamBoardCommentAuthController {
     @ApiOperation(value = "댓글 수정", notes = "게시물 번호, 내용을 입력해야합니다.")
     public ResponseEntity modification(@RequestHeader(value = "Authorization") String token,
                                        @RequestBody Comment comment){
-        teamBoardCommentAuthService.modification(token, comment);
+        playerBoardCommentAuthService.modification(token, comment);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -42,11 +42,8 @@ public class TeamBoardCommentAuthController {
     @RequestMapping(value = "/deletion", method = RequestMethod.DELETE)
     @ApiOperation(value = "댓글 삭제", notes = "댓글을 삭제합니다.")
     public ResponseEntity deletion(@RequestHeader(value = "Authorization") String token,
-                                    @RequestBody Comment comment){
-        teamBoardCommentAuthService.deletion(token, comment);
+                                   @RequestBody Comment comment){
+        playerBoardCommentAuthService.deletion(token, comment);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-
-
 }

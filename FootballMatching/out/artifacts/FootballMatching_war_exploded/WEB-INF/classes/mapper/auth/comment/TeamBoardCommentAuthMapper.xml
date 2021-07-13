@@ -15,4 +15,10 @@
         SET modifiedDate = #{modifiedDate}, content = #{content}
         WHERE user_idx = #{writer} AND board_id = #{boardNumber}
     </update>
+
+    <update id="deletion" parameterType="domain.Comment">
+        UPDATE footballMatching.team_board_comment
+        SET is_deleted = 1
+        WHERE user_idx = #{writer}
+    </update>
 </mapper>

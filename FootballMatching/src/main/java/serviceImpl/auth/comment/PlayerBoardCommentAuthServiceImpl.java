@@ -3,8 +3,10 @@ package serviceImpl.auth.comment;
 import domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import repository.auth.comment.PlayerBoardCommentAuthMapper;
 import repository.auth.comment.TeamBoardCommentAuthMapper;
 import repository.non_auth.UserMapper;
+import service.auth.comment.PlayerBoardCommentAuthService;
 import service.auth.comment.TeamBoardCommentAuthService;
 import util.JwtUtil;
 
@@ -12,10 +14,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Service
-public class TeamBoardCommentAuthServiceImpl implements TeamBoardCommentAuthService {
+public class PlayerBoardCommentAuthServiceImpl implements PlayerBoardCommentAuthService {
 
     @Autowired
-    private TeamBoardCommentAuthMapper teamBoardCommentAuthMapper;
+    private PlayerBoardCommentAuthMapper playerBoardCommentAuthMapper;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -29,7 +31,7 @@ public class TeamBoardCommentAuthServiceImpl implements TeamBoardCommentAuthServ
         String idx = userMapper.findIdx(writer);
         comment.setWriter(idx);
         comment.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        teamBoardCommentAuthMapper.register(comment);
+        playerBoardCommentAuthMapper.register(comment);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class TeamBoardCommentAuthServiceImpl implements TeamBoardCommentAuthServ
         String idx = userMapper.findIdx(writer);
         comment.setWriter(idx);
         comment.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        teamBoardCommentAuthMapper.modification(comment);
+        playerBoardCommentAuthMapper.modification(comment);
     }
 
     @Override
@@ -46,6 +48,6 @@ public class TeamBoardCommentAuthServiceImpl implements TeamBoardCommentAuthServ
         String writer = jwtUtil.getId(token);
         String idx = userMapper.findIdx(writer);
         comment.setWriter(idx);
-        teamBoardCommentAuthMapper.deletion(comment);
+        playerBoardCommentAuthMapper.deletion(comment);
     }
 }
