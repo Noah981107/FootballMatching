@@ -1,5 +1,6 @@
 package interceptor;
 
+import annotation.BusinessUserAuth;
 import annotation.UserAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -20,8 +21,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         UserAuth auth = handlerMethod.getMethod().getDeclaredAnnotation(UserAuth.class); // 메소드의 어노테이션
+        BusinessUserAuth bAuth = handlerMethod.getMethod().getDeclaredAnnotation(BusinessUserAuth.class);
 
-        if (auth == null) { // auth annotation 이 없다면
+        if (auth == null || bAuth == null) { // auth annotation 이 없다면
             return true;
         } else { // auth annotation 이 있다면
             if ( jwtUtil.isValid(request.getHeader("Authorization"))){

@@ -1,8 +1,7 @@
 package controller.auth.board;
 
-import annotation.PlayerBoardAuth;
+import annotation.UserAuth;
 import domain.board.PlayerBoard;
-import domain.board.TeamBoard;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import service.auth.board.PlayerBoardAuthService;
 
 @Controller
-@PlayerBoardAuth
+@UserAuth
 @RequestMapping(value = "/player-board")
 public class PlayerBoardAuthController {
 

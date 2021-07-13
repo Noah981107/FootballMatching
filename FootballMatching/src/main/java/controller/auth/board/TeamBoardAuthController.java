@@ -1,17 +1,15 @@
 package controller.auth.board;
 
-import annotation.TeamBoardAuth;
+import annotation.UserAuth;
 import domain.board.TeamBoard;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import service.auth.board.TeamBoardAuthService;
 
 @Controller
-@TeamBoardAuth
+@UserAuth
 @RequestMapping(value = "/team-board")
 public class TeamBoardAuthController {
 
