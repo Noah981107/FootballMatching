@@ -40,7 +40,8 @@ public class BusinessUserAuthController {
     @ResponseBody
     @RequestMapping(value = "/withdraw", method = RequestMethod.PATCH)
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴를 합니다.")
-    public void withdraw(@RequestHeader(value = "Authorization") String token){
+    public ResponseEntity withdraw(@RequestHeader(value = "Authorization") String token){
         bUserAuthService.withdraw(token);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

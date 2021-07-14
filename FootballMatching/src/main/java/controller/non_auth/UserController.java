@@ -23,7 +23,7 @@ public class UserController {
     @ApiOperation(value = "회원 가입", notes = "이름, 비밀번호, 전화번호를 입력해야 합니다.")
     public ResponseEntity signUp(@RequestBody Users user) throws Exception{
         userService.signUp(user);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     //일반 회원 로그인 API
@@ -31,7 +31,7 @@ public class UserController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     @ApiOperation(value = "로그인", notes = "아이디, 비밀번호를 입력해야 합니다.")
     public ResponseEntity signIn(@RequestBody Users user) throws Exception{
-        return new ResponseEntity(userService.signIn(user),HttpStatus.OK);
+        return new ResponseEntity(userService.signIn(user),HttpStatus.CREATED);
     }
 
     //회원 ID 찾기 API
@@ -54,11 +54,12 @@ public class UserController {
 
     //회원 비밀번호 찾기 API - 비밀번호 변경
     @ResponseBody
-    @RequestMapping(value = "/update/password", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/finding/password", method = RequestMethod.PATCH)
     @ApiOperation(value = "회원 비밀번호 찾기 - 비밀번호 변경", notes = "회원 비밀번호 찾기 - id, 이름, 전화번호 일치 확인에서 나온 " +
             "JSON에서 PassWord만 변경해서 사용해야합니다.")
-    public void changePassword(@RequestBody Users user){
+    public ResponseEntity changePassword(@RequestBody Users user){
         userService.changePassword(user);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

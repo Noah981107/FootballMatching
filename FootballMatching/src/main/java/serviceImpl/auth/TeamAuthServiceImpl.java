@@ -43,7 +43,7 @@ public class TeamAuthServiceImpl implements TeamAuthService {
         String id = jwtUtil.getId(token);
         List<Team> result = teamAuthMapper.myTeam(id);
         if(result.isEmpty()){
-            throw new TeamException(ErrorCode.Team_Is_Empty);
+            throw new TeamException(ErrorCode.Registered_Team_Is_Empty);
         }
         else{
             return result;

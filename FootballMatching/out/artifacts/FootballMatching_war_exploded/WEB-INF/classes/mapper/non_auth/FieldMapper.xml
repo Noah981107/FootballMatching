@@ -7,11 +7,15 @@
 
     <!--지역 코드별 구장 검색-->
     <select id="searchField" parameterType="int" resultType="domain.Fields">
-        SELECT name, phoneNumber, address, parking, restroom, market, information, registrationDate FROM footballMatching.field WHERE location_code = #{locationCode};
+        SELECT name, phoneNumber, address, parking, restroom, market, information, registrationDate
+        FROM footballMatching.field
+        WHERE location_code = #{locationCode};
     </select>
 
     <!--구장 이름 확인-->
     <select id="checkFieldName" parameterType="string" resultType="int">
-        SELECT id FROM footballMatching.field WHERE name = #{fieldName};
+        SELECT id
+        FROM footballMatching.field
+        WHERE name = #{fieldName};
     </select>
 </mapper>

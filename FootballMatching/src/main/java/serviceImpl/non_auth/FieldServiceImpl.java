@@ -27,4 +27,10 @@ public class FieldServiceImpl implements FieldService {
             return result;
         }
     }
+
+    // 구장 이름 확인
+    @Override
+    public int checkFieldName(String fieldName) {
+        return fieldMapper.checkFieldName(fieldName);
+    }
 }

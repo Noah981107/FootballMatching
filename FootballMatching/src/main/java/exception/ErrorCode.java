@@ -7,8 +7,8 @@ public enum ErrorCode{
     //User, Business_User
     Id_Already_Exists("USER_ERROR_01", "이미 아이디가 존재합니다.", HttpStatus.BAD_REQUEST),
     PhoneNumber_Already_Exists("USER_ERROR_02", "이미 휴대전화번호가 존재합니다.", HttpStatus.BAD_REQUEST),
-    Id_Does_Not_Exists("USER_ERROR_03", "아이디가 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
-    Member_Dose_Not_Exists("USER_ERROR_04", "회원이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
+    Id_Does_Not_Exists("USER_ERROR_03", "아이디가 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+    Member_Dose_Not_Exists("USER_ERROR_04", "회원이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
     Id_Is_Empty("USER_ERROR_05", "아이디가 비어 있습니다.", HttpStatus.BAD_REQUEST),
     Password_Is_Empty("USER_ERROR_06", "비밀번호가 비어 있습니다.", HttpStatus.BAD_REQUEST),
     PhoneNumber_Is_Empty("USER_ERROR_07", "전화번호가 비어 있습니다.", HttpStatus.BAD_REQUEST),
@@ -18,18 +18,17 @@ public enum ErrorCode{
     Field_Name_Is_Empty("USER_ERROR_11", "구장 이름이 비어있습니다.", HttpStatus.BAD_REQUEST),
 
     //Team
-    Team_Is_Empty("TEAM_ERROR_01", "찾으시는 팀이 없습니다.", HttpStatus.BAD_REQUEST),
-    Registered_Team_Is_Empty("TEAM_ERROR_02", "등록된 팀이 없습니다.", HttpStatus.BAD_REQUEST),
+    Registered_Team_Is_Empty("TEAM_ERROR_01", "등록된 팀이 없습니다.", HttpStatus.NOT_FOUND),
 
     //Field
-    Registered_Field_Is_Empty("FIELD_ERROR_01", "등록된 구장이 없습니다.", HttpStatus.BAD_REQUEST),
+    Registered_Field_Is_Empty("FIELD_ERROR_01", "등록된 구장이 없습니다.", HttpStatus.NOT_FOUND),
     Filed_Already_Exists("FIELD_ERROR_02", "이미 구장이 등록되어 있습니다.", HttpStatus.BAD_REQUEST),
 
     //Team-Board
-    Registered_Post_Is_Empty("TEAMBOARD_ERROR_01", "등록된 게시물이 없습니다.",HttpStatus.BAD_REQUEST),
+    Registered_Post_Is_Empty("TEAMBOARD_ERROR_01", "등록된 게시물이 없습니다.",HttpStatus.NOT_FOUND),
 
     //Comment
-    Registered_Comment_Is_Empty("COMMENT_ERROR_01", "등록된 댓글이 없습니다.", HttpStatus.BAD_REQUEST),
+    Registered_Comment_Is_Empty("COMMENT_ERROR_01", "등록된 댓글이 없습니다.", HttpStatus.NOT_FOUND),
 
     ;
 

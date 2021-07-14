@@ -3,6 +3,7 @@ package controller.auth;
 import annotation.UserAuth;
 import domain.Users;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,9 @@ public class UserAuthController {
     //자신의 정보 조회
     @ResponseBody
     @RequestMapping(value = "/me", method = RequestMethod.GET)
-    @ApiOperation(value = "자신의 정보 조회", notes = "자신의 정보를 조회합니다.")
+    @ApiOperation(value = "자신의 정보 조회", notes = "자신의 정보를 조회합니다.", authorizations = @Authorization(value = "Bearer + accessToken"))
     public ResponseEntity inquiry(@RequestHeader(value = "Authorization") String token){
+        System.out.println(token);
         return new ResponseEntity(userAuthService.inquiry(token), HttpStatus.OK);
     }
 
@@ -40,8 +42,9 @@ public class UserAuthController {
     @ResponseBody
     @RequestMapping(value="/withdraw", method = RequestMethod.PATCH)
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴를 합니다.")
-    public void withdraw(@RequestHeader(value = "Authorization") String token){
+    public ResponseEntity withdraw(@RequestHeader(value = "Authorization") String token){
         userAuthService.withdraw(token);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

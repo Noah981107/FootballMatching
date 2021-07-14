@@ -5,12 +5,19 @@
 
 <mapper namespace="repository.non_auth.TeamMapper">
 
+    <!--팀 id 찾기-->
+    <select id="findId" parameterType="string" resultType="string">
+        SELECT id FROM footballMatching.team
+        WHERE name = #{name};
+    </select>
+
     <!--팀 전체 조회-->
     <select id="teamList" resultType="domain.Team">
         SELECT a.name, b.id as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
         FROM footballMatching.team as a
         LEFT JOIN footballMatching.user as b
-        ON a.user_idx = b.idx;
+        ON a.user_idx = b.idx
+        WHERE a.is_deleted = 0;
     </select>
 
     <!--팀 이름으로 팀 조회-->
@@ -19,7 +26,7 @@
         FROM footballMatching.team as a
         LEFT JOIN footballMatching.user as b
         ON a.user_idx = b.idx
-        WHERE a.name = #{teamName};
+        WHERE a.name = #{teamName} AND a.is_deleted = 0;
     </select>
 
     <!--지역 별 팀 조회-->
@@ -28,12 +35,7 @@
         FROM footballMatching.team as a
         LEFT JOIN footballMatching.user as b
         ON a.user_idx = b.idx
-        WHERE a.location_code = #{locationCode};
+        WHERE a.location_code = #{locationCode} AND a.is_deleted = 0;
     </select>
 
-    <!--팀 id 찾기-->
-    <select id="findId" parameterType="string" resultType="string">
-        SELECT id FROM footballMatching.team
-        WHERE name = #{name};
-    </select>
 </mapper>

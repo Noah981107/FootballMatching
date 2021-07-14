@@ -22,24 +22,27 @@ public class TeamAuthController {
     @ResponseBody
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ApiOperation(value = "팀 등록", notes = "팀 이름, 대표자, 지역코드, 정보를 입력합니다.")
-    public void registration(@RequestHeader(value = "Authorization") String token, @RequestBody Team team){
+    public ResponseEntity registration(@RequestHeader(value = "Authorization") String token, @RequestBody Team team){
         teamAuthService.registration(token, team);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     //팀 내용 변경
     @ResponseBody
     @RequestMapping(value = "/modification", method = RequestMethod.PATCH)
     @ApiOperation(value = "팀 내용 변경", notes = "등록한 팀에 대한 내용을 변경합니다.")
-    public void modification(@RequestHeader(value = "Authorization") String token, @RequestBody Team team){
+    public ResponseEntity modification(@RequestHeader(value = "Authorization") String token, @RequestBody Team team){
         teamAuthService.modification(token, team);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //팀 삭제
     @ResponseBody
     @RequestMapping(value = "/deletion", method = RequestMethod.DELETE)
     @ApiOperation(value = "팀 삭제", notes = "등록한 팀을 삭제합니다.")
-    public void deletion(@RequestHeader(value = "Authorization") String token, @RequestParam(value ="team-name") String teamName){
+    public ResponseEntity deletion(@RequestHeader(value = "Authorization") String token, @RequestParam(value ="team-name") String teamName){
         teamAuthService.deletion(token, teamName);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //회원이 등록한 팀 조회
@@ -49,7 +52,6 @@ public class TeamAuthController {
     public ResponseEntity myTeam(@RequestHeader(value = "Authorization") String token){
         return new ResponseEntity(teamAuthService.myTeam(token), HttpStatus.OK);
     }
-
 
 }
 

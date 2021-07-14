@@ -27,6 +27,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             return true;
         } else { // auth annotation 이 있다면
             if ( jwtUtil.isValid(request.getHeader("Authorization"))){
+                System.out.println("여기요 토큰 검사중 interceptior");
                 return true;
             }
             else{

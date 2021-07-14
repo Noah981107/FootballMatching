@@ -8,8 +8,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.non_auth.BusinessUserMapper;
-import repository.non_auth.FieldMapper;
 import service.non_auth.BusinessUserService;
+import service.non_auth.FieldService;
 import util.JwtUtil;
 
 import java.lang.reflect.Field;
@@ -24,7 +24,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     private BusinessUserMapper bUserMapper;
 
     @Autowired
-    private FieldMapper fieldMapper;
+    private FieldService fieldService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -44,7 +44,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     // 구장 확인
     @Override
     public int checkFieldName(String fieldName) {
-        return fieldMapper.checkFieldName(fieldName);
+        return fieldService.checkFieldName(fieldName);
     }
 
     // 구장 중복 확인

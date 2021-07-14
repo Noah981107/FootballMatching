@@ -23,7 +23,7 @@ public class BusinessUserController {
     @ApiOperation(value = "사업자 회원 회원가입", notes = "이름, 비밀번호, 전화번호, 구장 이름을 입력해야합니다.")
     public ResponseEntity signUp(@RequestBody BusinessUsers bUser) throws Exception{
         bUserService.signUp(bUser);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     // 사업자 회원 로그인 API
@@ -31,7 +31,7 @@ public class BusinessUserController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     @ApiOperation(value = "사업자 회원 로그인", notes = "아이디, 비밀번호를 입력해야합니다.")
     public ResponseEntity signIn(@RequestBody BusinessUsers bUser) throws Exception{
-        return new ResponseEntity(bUserService.signIn(bUser), HttpStatus.OK);
+        return new ResponseEntity(bUserService.signIn(bUser), HttpStatus.CREATED);
     }
 
     // 사업자 회원 ID 찾기 API
@@ -54,9 +54,10 @@ public class BusinessUserController {
 
     //회원 비밀번호 찾기 API - 비밀번호 변경
     @ResponseBody
-    @RequestMapping(value = "/update/password", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/finding/password", method = RequestMethod.PATCH)
     @ApiOperation(value = "비밀번호 변경", notes = "회원 비밀번호 찾기 - id, 이름, 전화번호 일치 여부 다음 과정입니다.")
-    public void changePassword(@RequestBody BusinessUsers bUser){
+    public ResponseEntity changePassword(@RequestBody BusinessUsers bUser){
         bUserService.changePassword(bUser);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

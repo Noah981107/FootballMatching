@@ -6,6 +6,7 @@ public class MyException extends RuntimeException {
 
     private String code;
     private HttpStatus httpStatus;
+    private String detail;
     private String name;
 
     public MyException(ErrorCode errorCode) {
@@ -26,6 +27,14 @@ public class MyException extends RuntimeException {
 
     public void setHttpStatus(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public String getName() {

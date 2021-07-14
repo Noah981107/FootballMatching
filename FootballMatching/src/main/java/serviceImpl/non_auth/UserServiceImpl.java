@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    // id 중복 검사
+    //  중복 검사
     @Override
     public String checkId(String id) {
         return userMapper.checkId(id);
@@ -35,6 +35,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkPhoneNumber(String phoneNumber) {
         return userMapper.checkPhoneNumber(phoneNumber);
+    }
+
+    // idx 찾기
+    @Override
+    public String findIdx(String id) {
+        return userMapper.findIdx(id);
     }
 
     // 토큰 발급
@@ -87,10 +93,10 @@ public class UserServiceImpl implements UserService {
         if(user.getPassword() == null || user.getPassword().equals("string")){
             throw new UserException(ErrorCode.Password_Is_Empty);
         }
-        String returnPassword = userMapper.signIn(user);
+        String returnPassword = userMapper.signIn(user); // DB에서 비밀번호 반환
         if(returnPassword != null){
-            if(BCrypt.checkpw(user.getPassword(), returnPassword)){
-                return tokenIssued(user.getId());
+            if(BCrypt.checkpw(user.getPassword(), returnPassword)){ // 비밀번호를 비교
+                return tokenIssued(user.getId()); // 로그인 성공 시 토큰 반환
             }
             else {
                 throw new UserException(ErrorCode.Password_Does_Not_Match);
@@ -107,12 +113,12 @@ public class UserServiceImpl implements UserService {
         HashMap<String, Object> map = new HashMap<String,Object>();
         map.put("name", name);
         map.put("phoneNumber", phoneNumber);
-        String returnId = userMapper.findId(map);
+        String returnId = userMapper.findId(map); // name, phoneNumber 비교해서 id 찾아오기
         if (returnId == null || returnId.isEmpty()){
             throw new UserException(ErrorCode.Id_Does_Not_Exists);
         }
         else {
-            return returnId;
+            return returnId; // id가 있으면 찾은 id 반환
         }
     }
 
@@ -129,9 +135,9 @@ public class UserServiceImpl implements UserService {
         if(user.getName() == null || user.getName().equals("string")){
             throw new UserException(ErrorCode.Name_Is_Empty);
         }
-        Users returnUser = userMapper.lookUp(user);
+        Users returnUser = userMapper.lookUp(user); // id, 전화번호, 이름 일치 여부를 파악
         if(returnUser != null){
-            returnUser.setPassword("0");
+            returnUser.setPassword("0"); // 찾았을때, 비밀번호를 0으로 초기화해서 Json으로 쏴줌
             return returnUser;
         }
         else {
@@ -141,8 +147,8 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 찾기 - 비밀번호 변경
     @Override
-    public void changePassword(Users user){
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+    public void changePassword(Users user){ // 0으로 초기화된 Json에서 비밀번호를 바꿔서 사용
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt())); // 암호화
         userMapper.changePassword(user);
     }
 }

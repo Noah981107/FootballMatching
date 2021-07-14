@@ -17,6 +17,12 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamMapper teamMapper;
 
+    // 팀 id 찾기
+    @Override
+    public String findId(String name) {
+        return teamMapper.findId(name);
+    }
+
     //팀 전체 조회
     @Override
     public List<Team> teamList() {
@@ -31,13 +37,13 @@ public class TeamServiceImpl implements TeamService {
 
     //팀 이름으로 팀 조회
     @Override
-    public Team findName(String teamName) throws Exception {
-        Team return_team = teamMapper.findName(teamName);
-        if(return_team == null){
-            throw new TeamException(ErrorCode.Team_Is_Empty);
+    public List<Team> findName(String teamName) throws Exception {
+        List<Team> result = teamMapper.findName(teamName);
+        if(result.isEmpty()){
+            throw new TeamException(ErrorCode.Registered_Team_Is_Empty);
         }
         else{
-            return return_team;
+            return result;
         }
     }
     
