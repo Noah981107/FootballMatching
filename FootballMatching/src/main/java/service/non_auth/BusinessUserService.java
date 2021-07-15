@@ -3,13 +3,8 @@ package service.non_auth;
 import domain.BusinessUsers;
 
 public interface BusinessUserService {
-    String checkId(String id); // id 중복 체크
 
     String checkPhoneNumber(String phoneNumber); // 전화번호 중복 체크
-
-    int checkFieldName(String fieldName); // 구장 확인
-
-    String checkFieldId(int fieldId); // 구장 중복 확인
 
     String tokenIssued(String id); // 토큰 발급
 

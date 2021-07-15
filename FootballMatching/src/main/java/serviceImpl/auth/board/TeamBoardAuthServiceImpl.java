@@ -8,6 +8,7 @@ import repository.non_auth.TeamMapper;
 import repository.non_auth.UserMapper;
 import service.auth.TeamAuthService;
 import service.auth.board.TeamBoardAuthService;
+import service.non_auth.TeamService;
 import service.non_auth.UserService;
 import util.JwtUtil;
 
@@ -27,13 +28,13 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     private UserService userService;
 
     @Autowired
-    private TeamMapper teamMapper;
+    private TeamService teamService;
 
     @Override
     public void write(TeamBoard teamBoard) {
         String idx = userService.findIdx(jwtUtil.getId());
         teamBoard.setWriter(idx);
-        String id = teamMapper.findId(teamBoard.getTeamName());
+        String id = teamService.findId(teamBoard.getTeamName());
         teamBoard.setTeamName(id);
         teamBoard.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamBoardAuthMapper.write(teamBoard);
@@ -43,7 +44,7 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     public void modification(TeamBoard teamBoard) {
         String idx = userService.findIdx(jwtUtil.getId());
         teamBoard.setWriter(idx);
-        String id = teamMapper.findId(teamBoard.getTeamName());
+        String id = teamService.findId(teamBoard.getTeamName());
         teamBoard.setTeamName(id);
         teamBoard.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamBoardAuthMapper.modification(teamBoard);
@@ -53,7 +54,7 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     public void deletion(TeamBoard teamBoard) {
         String idx = userService.findIdx(jwtUtil.getId());
         teamBoard.setWriter(idx);
-        String id = teamMapper.findId(teamBoard.getTeamName());
+        String id = teamService.findId(teamBoard.getTeamName());
         teamBoard.setTeamName(id);
         teamBoardAuthMapper.deletion(teamBoard);
     }

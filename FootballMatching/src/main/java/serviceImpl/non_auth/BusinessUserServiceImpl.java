@@ -29,34 +29,16 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    // id 중복 체크
-    @Override
-    public String checkId(String id) {
-        return bUserMapper.checkId(id);
-    }
-
     // 전화번호 중복 체크
     @Override
     public String checkPhoneNumber(String phoneNumber) {
         return bUserMapper.checkPhoneNumber(phoneNumber);
     }
 
-    // 구장 확인
-    @Override
-    public int checkFieldName(String fieldName) {
-        return fieldService.checkFieldName(fieldName);
-    }
-
-    // 구장 중복 확인
-    @Override
-    public String checkFieldId(int fieldId) {
-        return bUserMapper.checkFieldId(fieldId);
-    }
-
     //토큰 발급
     @Override
     public String tokenIssued(String id) {
-        String returnId = checkId(id);
+        String returnId = bUserMapper.checkId(id);
         if(returnId == null || returnId.isEmpty()){
             try {
                 throw new Exception("There is no such id");
@@ -85,13 +67,13 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         if(bUser.getFieldName() == null || bUser.getFieldName().equals("string")){
             throw new BusinessUserException(ErrorCode.Field_Name_Is_Empty);
         }
-        String returnId = checkId(bUser.getId()); // id 중복 확인
+        String returnId = bUserMapper.checkId(bUser.getId()); // id 중복 확인
         if(returnId == null || returnId.isEmpty()){ // id가 중복되지 않았을때
             String returnPhoneNumber = checkPhoneNumber(bUser.getPhoneNumber()); // 휴대전화번호 중복 확인
             if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){ // 휴대전화번호가 중복되지 않았을 때
-                int returnFieldId = checkFieldName(bUser.getFieldName()); // 구장 이름에 따른 구장 번호 조회
+                int returnFieldId = fieldService.checkFieldName(bUser.getFieldName()); // 구장 이름에 따른 구장 번호 조회
                 if(returnFieldId > 0){ // 구장 번호가 있을 경우
-                    String overlapFieldId = checkFieldId(returnFieldId); // 구장 중복 확인
+                    String overlapFieldId = bUserMapper.checkFieldId(returnFieldId); // 구장 중복 확인
                     if(overlapFieldId == null || overlapFieldId.isEmpty()){
                         bUser.setJoinDate(Timestamp.valueOf(LocalDateTime.now()).toString());
                         bUser.setPassword(BCrypt.hashpw(bUser.getPassword(), BCrypt.gensalt()));
@@ -141,7 +123,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     // ID 찾기
     @Override
     public String findId(BusinessUsers bUser) throws Exception {
-        int returnFieldId = checkFieldName(bUser.getFieldName());
+        int returnFieldId = fieldService.checkFieldName(bUser.getFieldName());
         if(returnFieldId<0){
             throw new BusinessUserException(ErrorCode.Registered_Field_Is_Empty);
         }
@@ -160,7 +142,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     // 비밀번호 찾기 - id, 전화번호, 이름, 구장 이름 일치 여부 파악
     @Override
     public BusinessUsers lookUp(BusinessUsers bUser) throws Exception {
-        int returnFieldId = checkFieldName(bUser.getFieldName());
+        int returnFieldId = fieldService.checkFieldName(bUser.getFieldName());
         if(returnFieldId>0){
             bUser.setFieldName(Integer.toString(returnFieldId));
             BusinessUsers returnBUser = bUserMapper.lookUp(bUser);
@@ -180,7 +162,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     // 비밀번호 찾기 - 비밀번호 변경
     @Override
     public void changePassword(BusinessUsers bUser) {
-        int returnFieldId = checkFieldName(bUser.getFieldName());
+        int returnFieldId = fieldService.checkFieldName(bUser.getFieldName());
         bUser.setFieldName(Integer.toString(returnFieldId));
         bUser.setPassword(BCrypt.hashpw(bUser.getPassword(), BCrypt.gensalt()));
         bUserMapper.changePassword(bUser);

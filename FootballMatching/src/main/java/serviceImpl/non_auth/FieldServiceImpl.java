@@ -28,7 +28,7 @@ public class FieldServiceImpl implements FieldService {
         }
     }
 
-    // 구장 이름 확인
+    // 구장 이름 확인 -> 사업자 회원 회원가입시 사용
     @Override
     public int checkFieldName(String fieldName) {
         return fieldMapper.checkFieldName(fieldName);

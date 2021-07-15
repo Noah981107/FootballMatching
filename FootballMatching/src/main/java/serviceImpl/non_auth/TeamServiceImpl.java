@@ -17,7 +17,7 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamMapper teamMapper;
 
-    // 팀 id 찾기
+    // 팀 id 찾기 -> 게시판, 팀등록할때 많이 쓰임
     @Override
     public String findId(String name) {
         return teamMapper.findId(name);

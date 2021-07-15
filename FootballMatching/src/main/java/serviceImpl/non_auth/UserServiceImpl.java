@@ -24,21 +24,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
-
-    //  중복 검사
-    @Override
-    public String checkId(String id) {
-        return userMapper.checkId(id);
-    }
-
-    // 휴대폰 중복 검사
+    
+    // 휴대폰 중복 검사 -> 회원 정보 변경할때 사용함
     @Override
     public String checkPhoneNumber(String phoneNumber) {
         return userMapper.checkPhoneNumber(phoneNumber);
     }
 
-    // idx 찾기
-    @Override
+    // idx 찾기 -> 게시판, 댓글 사용할때 많이 사용함
+    @Override 
     public String findIdx(String id) {
         return userMapper.findIdx(id);
     }
@@ -46,7 +40,7 @@ public class UserServiceImpl implements UserService {
     // 토큰 발급
     @Override
     public String tokenIssued(String id) throws Exception {
-        String returnId = checkId(id); // id 확인
+        String returnId = userMapper.checkId(id); // id 확인
         if(returnId == null || returnId.isEmpty()){ // id가 없으면
             throw new UserException(ErrorCode.Id_Does_Not_Exists);
         }
@@ -67,7 +61,7 @@ public class UserServiceImpl implements UserService {
         if(user.getPhoneNumber() == null || user.getPhoneNumber().equals("string")){
             throw new UserException(ErrorCode.PhoneNumber_Is_Empty);
         }
-        String returnId  = checkId(user.getId()); // id 중복 확인
+        String returnId  = userMapper.checkId(user.getId()); // id 중복 확인
         if (returnId == null || returnId.isEmpty()){ // 중복된 id가 없을 때
             String returnPhoneNumber = checkPhoneNumber(user.getPhoneNumber()); // 휴대전화번호 중복 확인
             if(returnPhoneNumber == null || returnPhoneNumber.isEmpty()){ // 중복된 휴대전화번호가 없을 때때
