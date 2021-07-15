@@ -8,6 +8,7 @@ import repository.auth.board.PlayerBoardAuthMapper;
 import repository.non_auth.TeamMapper;
 import repository.non_auth.UserMapper;
 import service.auth.board.PlayerBoardAuthService;
+import service.non_auth.UserService;
 import util.JwtUtil;
 
 import java.sql.Timestamp;
@@ -23,15 +24,14 @@ public class PlayerBoardAuthServiceImpl implements PlayerBoardAuthService {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
     private TeamMapper teamMapper;
 
     @Override
-    public void write(String token, PlayerBoard playerBoard) {
-        String writer = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void write(PlayerBoard playerBoard) {
+        String idx = userService.findIdx(jwtUtil.getId());
         playerBoard.setWriter(idx);
         String id = teamMapper.findId(playerBoard.getTeamName());
         playerBoard.setTeamName(id);
@@ -41,9 +41,8 @@ public class PlayerBoardAuthServiceImpl implements PlayerBoardAuthService {
     }
 
     @Override
-    public void modification(String token, PlayerBoard playerBoard) {
-        String writer = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void modification(PlayerBoard playerBoard) {
+        String idx = userService.findIdx(jwtUtil.getId());
         playerBoard.setWriter(idx);
         String id = teamMapper.findId(playerBoard.getTeamName());
         playerBoard.setTeamName(id);
@@ -52,9 +51,8 @@ public class PlayerBoardAuthServiceImpl implements PlayerBoardAuthService {
     }
 
     @Override
-    public void deletion(String token, PlayerBoard playerBoard) {
-        String writer= jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void deletion(PlayerBoard playerBoard) {
+        String idx = userService.findIdx(jwtUtil.getId());
         playerBoard.setWriter(idx);
         String id = teamMapper.findId(playerBoard.getTeamName());
         playerBoard.setTeamName(id);

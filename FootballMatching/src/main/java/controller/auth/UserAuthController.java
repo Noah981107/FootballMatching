@@ -25,10 +25,9 @@ public class UserAuthController {
     @UserAuth
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
-    @ApiOperation(value = "회원 정보 수정", notes = "이름, 비밀번호, 전화번호 수정 가능합니다.")
-    public ResponseEntity modification(@RequestHeader(value = "Authorization") String token,
-                                       @RequestBody Users user) throws Exception{
-        userAuthService.modification(token, user);
+    @ApiOperation(value = "회원 정보 수정", notes = "이름, 비밀번호, 전화번호 수정 가능합니다.", authorizations = @Authorization(value = "Authorization"))
+    public ResponseEntity modification(@RequestBody Users user) throws Exception{
+        userAuthService.modification(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -45,9 +44,9 @@ public class UserAuthController {
     @UserAuth
     @ResponseBody
     @RequestMapping(value="", method = RequestMethod.DELETE)
-    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴를 합니다.")
-    public ResponseEntity withdraw(@RequestHeader(value = "Authorization") String token){
-        userAuthService.withdraw(token);
+    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴를 합니다.", authorizations = @Authorization(value = "Authorization"))
+    public ResponseEntity withdraw(){
+        userAuthService.withdraw();
         return new ResponseEntity(HttpStatus.OK);
     }
 

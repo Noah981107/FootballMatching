@@ -5,7 +5,7 @@ import domain.board.TeamBoard;
 
 public interface PlayerBoardAuthService {
 
-    void write(String token, PlayerBoard playerBoard);
-    void modification(String token, PlayerBoard playerBoard);
-    void deletion(String token, PlayerBoard playerBoard);
+    void write(PlayerBoard playerBoard);
+    void modification(PlayerBoard playerBoard);
+    void deletion(PlayerBoard playerBoard);
 }

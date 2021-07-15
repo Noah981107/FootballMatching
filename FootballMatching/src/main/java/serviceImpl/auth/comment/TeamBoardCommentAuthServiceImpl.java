@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import repository.auth.comment.TeamBoardCommentAuthMapper;
 import repository.non_auth.UserMapper;
 import service.auth.comment.TeamBoardCommentAuthService;
+import service.non_auth.UserService;
 import util.JwtUtil;
 
 import java.sql.Timestamp;
@@ -21,30 +22,27 @@ public class TeamBoardCommentAuthServiceImpl implements TeamBoardCommentAuthServ
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Override
-    public void register(String token, Comment comment) {
-        String writer = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void register(Comment comment) {
+        String idx = userService.findIdx(jwtUtil.getId());
         comment.setWriter(idx);
         comment.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamBoardCommentAuthMapper.register(comment);
     }
 
     @Override
-    public void modification(String token, Comment comment) {
-        String writer = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void modification(Comment comment) {
+        String idx = userService.findIdx(jwtUtil.getId());
         comment.setWriter(idx);
         comment.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamBoardCommentAuthMapper.modification(comment);
     }
 
     @Override
-    public void deletion(String token, Comment comment) {
-        String writer = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void deletion(Comment comment) {
+        String idx = userService.findIdx(jwtUtil.getId());
         comment.setWriter(idx);
         teamBoardCommentAuthMapper.deletion(comment);
     }

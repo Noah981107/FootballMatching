@@ -28,11 +28,11 @@ public class BusinessUserAuthServiceImpl implements BusinessUserAuthService {
 
     //회원 정보 수정 - 비밀번호, 이름 , 전화번호 수정 가능
     @Override
-    public void modification(String token, BusinessUsers bUser) {
+    public void modification(BusinessUsers bUser) {
         String name = bUser.getName();
         String password = bUser.getPassword();
         String phoneNumber = bUser.getPhoneNumber();
-        String account = jwtUtil.getId(token);
+        String account = jwtUtil.getId();
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("id", account);
         if (name != null) {
@@ -58,14 +58,12 @@ public class BusinessUserAuthServiceImpl implements BusinessUserAuthService {
 
     // 자신의 정보 조회
     @Override
-    public BusinessUsers inquiry(String token) {
-        String id = jwtUtil.getId(token);
-        return bUserAuthMapper.inquiry(id);
+    public BusinessUsers inquiry() {
+        return bUserAuthMapper.inquiry(jwtUtil.getId());
     }
 
     // 회원 탈퇴
-    public void withdraw(String token){
-        String id = jwtUtil.getId(token);
-        bUserAuthMapper.withdraw(id);
+    public void withdraw(){
+        bUserAuthMapper.withdraw(jwtUtil.getId());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import repository.auth.TeamAuthMapper;
 import repository.non_auth.UserMapper;
 import service.auth.TeamAuthService;
+import service.non_auth.UserService;
 import util.JwtUtil;
 
 import java.sql.Timestamp;
@@ -22,16 +23,15 @@ public class TeamAuthServiceImpl implements TeamAuthService {
     private TeamAuthMapper teamAuthMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
     private JwtUtil jwtUtil;
 
     //팀 등록
     @Override
-    public void registration(String token, Team team) {
-        String id = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(id);
+    public void registration(Team team) {
+        String idx = userService.findIdx(jwtUtil.getId());
         team.setRepresentative(idx);
         team.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamAuthMapper.registration(team);
@@ -39,8 +39,8 @@ public class TeamAuthServiceImpl implements TeamAuthService {
 
     //내가 등록한 팀 조회
     @Override
-    public List<Team> myTeam(String token) {
-        String id = jwtUtil.getId(token);
+    public List<Team> myTeam() {
+        String id = jwtUtil.getId();
         List<Team> result = teamAuthMapper.myTeam(id);
         if(result.isEmpty()){
             throw new TeamException(ErrorCode.Registered_Team_Is_Empty);
@@ -52,9 +52,8 @@ public class TeamAuthServiceImpl implements TeamAuthService {
 
     //팀 삭제
     @Override
-    public void deletion(String token, String teamName) {
-        String id = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(id);
+    public void deletion(String teamName) {
+        String idx = userService.findIdx(jwtUtil.getId());
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("idx", idx);
         map.put("teamName", teamName);
@@ -63,9 +62,8 @@ public class TeamAuthServiceImpl implements TeamAuthService {
 
     // 팀 수정
     @Override
-    public void modification(String token, Team team) {
-        String id = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(id);
+    public void modification(Team team) {
+        String idx = userService.findIdx(jwtUtil.getId());
         team.setRepresentative(idx);
         team.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamAuthMapper.modification(team);

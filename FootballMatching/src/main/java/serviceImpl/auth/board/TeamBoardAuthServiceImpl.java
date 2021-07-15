@@ -24,15 +24,14 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
     private TeamMapper teamMapper;
 
     @Override
-    public void write(String token, TeamBoard teamBoard) {
-        String writer = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void write(TeamBoard teamBoard) {
+        String idx = userService.findIdx(jwtUtil.getId());
         teamBoard.setWriter(idx);
         String id = teamMapper.findId(teamBoard.getTeamName());
         teamBoard.setTeamName(id);
@@ -41,9 +40,8 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     }
 
     @Override
-    public void modification(String token, TeamBoard teamBoard) {
-        String writer = jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void modification(TeamBoard teamBoard) {
+        String idx = userService.findIdx(jwtUtil.getId());
         teamBoard.setWriter(idx);
         String id = teamMapper.findId(teamBoard.getTeamName());
         teamBoard.setTeamName(id);
@@ -52,9 +50,8 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     }
 
     @Override
-    public void deletion(String token, TeamBoard teamBoard) {
-        String writer= jwtUtil.getId(token);
-        String idx = userMapper.findIdx(writer);
+    public void deletion(TeamBoard teamBoard) {
+        String idx = userService.findIdx(jwtUtil.getId());
         teamBoard.setWriter(idx);
         String id = teamMapper.findId(teamBoard.getTeamName());
         teamBoard.setTeamName(id);
