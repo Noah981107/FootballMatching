@@ -28,7 +28,7 @@ public class PlayerBoardController {
 
     //팀 이름으로 조회
     @ResponseBody
-    @RequestMapping(value = "/finding/name", method = RequestMethod.GET)
+    @RequestMapping(value = "/name", method = RequestMethod.GET)
     @ApiOperation(value = "팀 이름으로 조회", notes = "팀 이름을 입력해야 합니다.")
     public ResponseEntity teamName(@RequestParam(value = "team-name") String teamName){
         return new ResponseEntity(playerBoardService.findName(teamName), HttpStatus.OK);
@@ -36,7 +36,7 @@ public class PlayerBoardController {
 
     //작성자 이름으로 조회
     @ResponseBody
-    @RequestMapping(value = "/finding/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     @ApiOperation(value = "작성자 이름으로 조회", notes = "작성자 이름을 입력해야 합니다.")
     public ResponseEntity writer(@RequestParam(value = "writer") String writer){
         return new ResponseEntity(playerBoardService.findWriter(writer), HttpStatus.OK);

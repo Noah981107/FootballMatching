@@ -8,7 +8,12 @@ class LoginPage extends Component{
         super(props)
         this.state = {
             id : "",
-            pw : ""
+            password : "",
+            name : "",
+            phoneNumber : "",
+            locationCode : "",
+            joinDate : "",
+            isDeleted : ""
         }
     }
 
@@ -23,32 +28,26 @@ class LoginPage extends Component{
     handlePW = e =>{
         this.setState(
             {
-                pw : e.target.value
+                password : e.target.value
             }
         )
     }
 
     handleSubmit = e =>{
-        alert('hi');
+        alert(this.state.id);
+        alert(this.state.password);
         e.preventDefault();
-        const login_info = {
-            method : "POST",
-            mode : "no-cors",
-            body : JSON.stringify(this.state), 
-            headers : {
-                "Content-Type" : "application/json;charset=UTF-8"
-            }
-        };
-        fetch("http://localhost:8080/user/signin", login_info)
-            .then(res => {
-                return res.json;
-            })
-            .then(json => {
-                console.log(JSON.parse(json));
-                if(json.id === this.state.id){
-                    alert("로그인 되었습니다.");
-                }
-            })
+        axios.post('http://localhost:8080/user/signin', {
+            id : this.state.id,
+            password : this.state.password
+          })
+          
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     render(){

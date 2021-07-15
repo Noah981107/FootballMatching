@@ -46,7 +46,7 @@ public class BusinessUserController {
 
     // 사업자 회원 ID 찾기 API
     @ResponseBody
-    @RequestMapping(value = "/finding/id", method = RequestMethod.POST)
+    @RequestMapping(value = "/id", method = RequestMethod.POST)
     @ApiOperation(value = "사업자 회원 ID 찾기", notes = "이름, 전화번호, 구장 이름을 입력해야합니다.")
     public ResponseEntity findID(@RequestBody BusinessUsers bUser) throws Exception{
         return new ResponseEntity(bUserService.findId(bUser), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class BusinessUserController {
 
     //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인
     @ResponseBody
-    @RequestMapping(value = "/finding/password", method = RequestMethod.POST)
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
     @ApiOperation(value = "회원 비밀번호 찾기", notes = "id, 이름, 전화번호를 입력해야합니다.")
     public ResponseEntity findPassword(@RequestBody BusinessUsers bUser) throws Exception{
         return new ResponseEntity(bUserService.lookUp(bUser), HttpStatus.OK);
@@ -62,7 +62,7 @@ public class BusinessUserController {
 
     //회원 비밀번호 찾기 API - 비밀번호 변경
     @ResponseBody
-    @RequestMapping(value = "/finding/password", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/password", method = RequestMethod.PATCH)
     @ApiOperation(value = "비밀번호 변경", notes = "회원 비밀번호 찾기 - id, 이름, 전화번호 일치 여부 다음 과정입니다.")
     public ResponseEntity changePassword(@RequestBody BusinessUsers bUser){
         bUserService.changePassword(bUser);

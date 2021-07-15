@@ -31,12 +31,14 @@ public class UserController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     @ApiOperation(value = "로그인", notes = "아이디, 비밀번호를 입력해야 합니다.")
     public ResponseEntity signIn(@RequestBody Users user) throws Exception{
+        System.out.println(user.getId());
+        System.out.println(user.getPassword());
         return new ResponseEntity(userService.signIn(user),HttpStatus.CREATED);
     }
 
     //회원 ID 찾기 API
     @ResponseBody
-    @RequestMapping(value = "/finding/id", method = RequestMethod.GET)
+    @RequestMapping(value = "/id", method = RequestMethod.GET)
     @ApiOperation(value = "아이디 찾기", notes = "이름 , 전화번호를 입력해야합니다.")
     public ResponseEntity findId(@RequestParam(value = "name") String name ,
                                  @RequestParam(value = "phoneNumber") String phoneNumber) throws Exception {
@@ -46,7 +48,7 @@ public class UserController {
 
     //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인
     @ResponseBody
-    @RequestMapping(value = "/finding/password", method = RequestMethod.POST)
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
     @ApiOperation(value = "회원 비밀번호 찾기 - id, 이름, 전화번호 일치 확인", notes = "id, 이름, 전화번호를 입력해야합니다.")
     public ResponseEntity findPassword(@RequestBody Users user) throws Exception{
         return new ResponseEntity(userService.lookUp(user), HttpStatus.OK) ;
@@ -54,7 +56,7 @@ public class UserController {
 
     //회원 비밀번호 찾기 API - 비밀번호 변경
     @ResponseBody
-    @RequestMapping(value = "/finding/password", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/password", method = RequestMethod.PATCH)
     @ApiOperation(value = "회원 비밀번호 찾기 - 비밀번호 변경", notes = "회원 비밀번호 찾기 - id, 이름, 전화번호 일치 확인에서 나온 " +
             "JSON에서 PassWord만 변경해서 사용해야합니다.")
     public ResponseEntity changePassword(@RequestBody Users user){

@@ -28,7 +28,7 @@ public class TeamController {
 
     //팀 이름으로 조회
     @ResponseBody
-    @RequestMapping(value = "/finding/name", method = RequestMethod.GET)
+    @RequestMapping(value = "/name", method = RequestMethod.GET)
     @ApiOperation(value = "팀 이름으로 조회", notes = "등록된 팀을 팀 이름으로 조회합니다.")
     public ResponseEntity findName(@RequestParam(value = "team-name") String teamName) throws Exception{
         return new ResponseEntity(teamService.findName(teamName), HttpStatus.OK);
@@ -36,7 +36,7 @@ public class TeamController {
 
     //지역별 팀 조회
     @ResponseBody
-    @RequestMapping(value = "/finding/local", method = RequestMethod.GET)
+    @RequestMapping(value = "/local", method = RequestMethod.GET)
     @ApiOperation(value = "지역별 팀 조회", notes = "지역별 팀을 전체 조회합니다.")
     public ResponseEntity findLocal(@RequestParam(value = "location-code") int locationCode){
         return new ResponseEntity(teamService.findLocal(locationCode), HttpStatus.OK);
