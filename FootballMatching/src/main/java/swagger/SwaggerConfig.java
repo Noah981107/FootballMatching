@@ -13,12 +13,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
 
-
-@EnableSwagger2 // Swagger2 버전을 활성화하는 어노테이션
 @Configuration
+@EnableSwagger2 // Swagger2 버전을 활성화하는 어노테이션
 public class SwaggerConfig {
     @Bean
     public Docket api() {
+        System.out.println("여기요");
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select() // ApiSelectorBuilder를 생성
@@ -34,10 +34,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Beginner_Example_API_Document")
+                .title("FootballMatching_API_Document")
                 .description("API 설명")
                 .version("1.0.0")
                 .build();
     }
-
 }

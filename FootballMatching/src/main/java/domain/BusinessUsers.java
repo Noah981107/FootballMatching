@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
+
 public class BusinessUsers {
 
     protected String id;

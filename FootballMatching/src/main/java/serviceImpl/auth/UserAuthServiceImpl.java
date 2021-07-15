@@ -6,11 +6,14 @@ import exception.UserException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import repository.auth.UserAuthMapper;
 import service.non_auth.UserService;
 import service.auth.UserAuthService;
 import util.JwtUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @Service
@@ -57,8 +60,13 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     // 자신의 정보 조회
     @Override
-    public Users inquiry(String token) {
+    public Users inquiry() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization");
         String id = jwtUtil.getId(token);
+        System.out.println(request);
+        System.out.println(token);
+        System.out.println(id);
         return userAuthMapper.inquiry(id);
     }
 

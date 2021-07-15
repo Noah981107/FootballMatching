@@ -23,11 +23,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         UserAuth auth = handlerMethod.getMethod().getDeclaredAnnotation(UserAuth.class); // 메소드의 어노테이션
         BusinessUserAuth bAuth = handlerMethod.getMethod().getDeclaredAnnotation(BusinessUserAuth.class);
 
-        if (auth == null || bAuth == null) { // auth annotation 이 없다면
+        if (auth == null && bAuth == null) { // auth annotation 이 없다면
             return true;
         } else { // auth annotation 이 있다면
             if ( jwtUtil.isValid(request.getHeader("Authorization"))){
-                System.out.println("여기요 토큰 검사중 interceptior");
+                System.out.println("여기요 토큰 검사중");
                 return true;
             }
             else{

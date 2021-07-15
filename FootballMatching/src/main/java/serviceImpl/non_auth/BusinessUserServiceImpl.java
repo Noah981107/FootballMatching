@@ -140,17 +140,14 @@ public class BusinessUserServiceImpl implements BusinessUserService {
 
     // ID 찾기
     @Override
-    public String findId(String name, String phoneNumber, String fieldName) throws Exception {
-        int returnFieldId = checkFieldName(fieldName);
+    public String findId(BusinessUsers bUser) throws Exception {
+        int returnFieldId = checkFieldName(bUser.getFieldName());
         if(returnFieldId<0){
             throw new BusinessUserException(ErrorCode.Registered_Field_Is_Empty);
         }
         else{
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("name", name);
-            map.put("phoneNumber", phoneNumber);
-            map.put("field_id", returnFieldId);
-            String returnId = bUserMapper.findId(map);
+            bUser.setFieldName(Integer.toString(returnFieldId));
+            String returnId = bUserMapper.findId(bUser);
             if (returnId == null || returnId.isEmpty()){
                throw new BusinessUserException(ErrorCode.Id_Does_Not_Exists);
             }

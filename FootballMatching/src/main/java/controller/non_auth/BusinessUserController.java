@@ -35,13 +35,21 @@ public class BusinessUserController {
     }
 
     // 사업자 회원 ID 찾기 API
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/finding/id", method = RequestMethod.GET)
     @ApiOperation(value = "사업자 회원 ID 찾기", notes = "이름, 전화번호, 구장 이름을 입력해야합니다.")
     public ResponseEntity findID(@RequestParam(value = "name") String name,
                                  @RequestParam(value = "phoneNumber") String phoneNumber,
                                  @RequestParam(value = "field-name") String fieldName) throws Exception{
         return new ResponseEntity(bUserService.findId(name,phoneNumber,fieldName), HttpStatus.OK);
+    }*/
+
+    // 사업자 회원 ID 찾기 API
+    @ResponseBody
+    @RequestMapping(value = "/finding/id", method = RequestMethod.POST)
+    @ApiOperation(value = "사업자 회원 ID 찾기", notes = "이름, 전화번호, 구장 이름을 입력해야합니다.")
+    public ResponseEntity findID(@RequestBody BusinessUsers bUser) throws Exception{
+        return new ResponseEntity(bUserService.findId(bUser), HttpStatus.OK);
     }
 
     //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인

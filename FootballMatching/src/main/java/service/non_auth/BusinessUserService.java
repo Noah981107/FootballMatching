@@ -17,7 +17,7 @@ public interface BusinessUserService {
 
     String signIn(BusinessUsers bUser) throws Exception; // 로그인
 
-    String findId(String name, String phoneNumber, String fieldName) throws Exception; // id 찾기
+    String findId(BusinessUsers bUser) throws Exception; // id 찾기
 
     BusinessUsers lookUp(BusinessUsers bUser) throws Exception; // 비밀번호 찾기 - id, 전화번호, 이름, 구장 이름 일치 여부 파악
 

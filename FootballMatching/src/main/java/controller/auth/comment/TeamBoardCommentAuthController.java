@@ -12,24 +12,26 @@ import service.auth.comment.TeamBoardCommentAuthService;
 
 @Controller
 @RequestMapping(value = "/team-board-comment")
-@UserAuth
 public class TeamBoardCommentAuthController {
 
     @Autowired
     private TeamBoardCommentAuthService teamBoardCommentAuthService;
 
     //댓글 생성
+    @UserAuth
     @ResponseBody
-    @RequestMapping(value = "/registeration", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value ="댓글 생성", notes = "게시글 번호, 내용을 입력합니다.")
-    public ResponseEntity register(@RequestHeader(value = "Authorization") String token, @RequestBody Comment comment){
+    public ResponseEntity register(@RequestHeader(value = "Authorization") String token,
+                                   @RequestBody Comment comment){
         teamBoardCommentAuthService.register(token, comment);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //댓글 수정
+    @UserAuth
     @ResponseBody
-    @RequestMapping(value = "/modification", method = RequestMethod.PATCH)
+    @RequestMapping(value = "", method = RequestMethod.PATCH)
     @ApiOperation(value = "댓글 수정", notes = "게시물 번호, 내용을 입력해야합니다.")
     public ResponseEntity modification(@RequestHeader(value = "Authorization") String token,
                                        @RequestBody Comment comment){
@@ -38,8 +40,9 @@ public class TeamBoardCommentAuthController {
     }
 
     //댓글 삭제
+    @UserAuth
     @ResponseBody
-    @RequestMapping(value = "/deletion", method = RequestMethod.DELETE)
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
     @ApiOperation(value = "댓글 삭제", notes = "댓글을 삭제합니다.")
     public ResponseEntity deletion(@RequestHeader(value = "Authorization") String token,
                                     @RequestBody Comment comment){

@@ -33,12 +33,11 @@
 
     <!--ID 찾기-->
     <select id="findId" parameterType="hashMap" resultType="string">
-        SELECT id FROM footballMatching.business_user WHERE name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{field_id};
+        SELECT id FROM footballMatching.business_user WHERE name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{fieldName};
     </select>
 
     <!--비밀번호 찾기 - id, 전화번호, 이름, 구장 이름 일치 여부 파악-->
     <select id="lookUp" parameterType="domain.BusinessUsers" resultType="domain.BusinessUsers">
-        <!--SELECT * FROM footballMatching.business_user WHERE id = #{id} AND name = #{name} AND phoneNumber = #{phoneNumber} AND field_id = #{field_name};-->
         SELECT a.id, a.password, a.name, a.phoneNumber, b.name as fieldName
         FROM footballMatching.business_user as a LEFT JOIN footballMatching.field as b on a.field_id = b.id;
     </select>
