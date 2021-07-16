@@ -5,28 +5,22 @@ import org.springframework.http.HttpStatus;
 public class MyException extends RuntimeException {
 
     private String code;
-    private HttpStatus httpStatus;
+    private HttpStatus status;
     private String detail;
-    private String name;
+    private String exceptionName;
 
     public MyException(ErrorCode errorCode) {
         super(errorCode.getMessage());
+        this.code = errorCode.getCode();
+        this.status = errorCode.getHttpStatus();
+        this.exceptionName = this.getClass().getName();
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public void setHttpStatus(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
+    public MyException(ErrorCode errorCode, HttpStatus httpStatus) {
+        super(errorCode.getMessage());
+        this.code = errorCode.getCode();
+        this.status = httpStatus;
+        this.exceptionName = this.getClass().getName();
     }
 
     public String getDetail() {
@@ -37,11 +31,28 @@ public class MyException extends RuntimeException {
         this.detail = detail;
     }
 
-    public String getName() {
-        return name;
+    public String getExceptionName() {
+        return exceptionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setExceptionName(String exceptionName) {
+        this.exceptionName = exceptionName;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
 }

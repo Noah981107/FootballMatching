@@ -18,7 +18,7 @@ public class ExceptionController {
             de.setDetail(de.getStackTrace()[0].getClassName() + "." +
                     de.getStackTrace()[0].getMethodName() + "(Line:" +
                     de.getStackTrace()[0].getLineNumber() + ")");
-            return new ResponseEntity(de, de.getHttpStatus());
+            return new ResponseEntity(de, de.getStatus());
         }
         else {
             Map<String, Object> res = new HashMap<>();
