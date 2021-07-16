@@ -18,7 +18,6 @@ import java.util.Arrays;
 public class SwaggerConfig {
     @Bean
     public Docket api() {
-        System.out.println("여기요");
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select() // ApiSelectorBuilder를 생성

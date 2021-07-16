@@ -33,7 +33,7 @@
     </select>
 
     <!--ID 찾기-->
-    <select id="findId" parameterType="hashMap" resultType="string">
+    <select id="findId" parameterType="domain.Users" resultType="string">
         SELECT id
         FROM footballMatching.user
         WHERE name = #{name} AND phoneNumber = #{phoneNumber};
