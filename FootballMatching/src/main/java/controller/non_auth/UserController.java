@@ -1,7 +1,7 @@
 package controller.non_auth;
 
 import domain.Users;
-import domain.validation.UserValidationGroups;
+import domain.UserValidationGroups;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/id", method = RequestMethod.GET)
     @ApiOperation(value = "아이디 찾기", notes = "이름 , 전화번호를 입력해야합니다.")
-    public ResponseEntity findId(@RequestBody @Validated(UserValidationGroups.signIn.class) Users user) throws Exception {
+    public ResponseEntity findId(@RequestBody @Validated(UserValidationGroups.findId.class) Users user) throws Exception {
         return new ResponseEntity(userService.findId(user), HttpStatus.OK);
     }
 

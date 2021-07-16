@@ -1,4 +1,4 @@
-package domain.validation;
+package domain;
 
 public class UserValidationGroups {
 
@@ -7,4 +7,5 @@ public class UserValidationGroups {
     public interface findId {};
     public interface findPassword {};
     public interface changePassword {};
+    public interface modification {};
 }

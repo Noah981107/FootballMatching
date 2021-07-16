@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import service.non_auth.BusinessUserService;
 
+// 예약 기능 없으니까 잠시 보류
 @Controller
 @RequestMapping(value = "/business-user")
 public class BusinessUserController {
