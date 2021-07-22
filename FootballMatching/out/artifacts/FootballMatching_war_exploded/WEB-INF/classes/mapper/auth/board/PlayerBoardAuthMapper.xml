@@ -4,19 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="repository.auth.board.PlayerBoardAuthMapper">
-    <insert id="write" parameterType="domain.board.PlayerBoard">
+    <insert id="write" parameterType="domain.Board">
         INSERT INTO footballMatching.player_board
             (user_idx, team_id, postDate, content)
         VALUES (#{writer}, #{teamName}, #{postDate}, #{content});
     </insert>
-    <update id="modification" parameterType="domain.board.PlayerBoard">
+    <update id="modification" parameterType="domain.Board">
         UPDATE footballMatching.player_board
         SET content = #{content}, modifiedDate = #{modifiedDate}
-        WHERE user_idx = #{writer} AND team_id = #{teamName};
+        WHERE user_idx = #{writer} AND id = #{id};
     </update>
-    <update id="deletion" parameterType="domain.board.PlayerBoard">
+    <update id="deletion" parameterType="domain.Board">
         UPDATE footballMatching.player_board
         SET is_deleted = 1
-        WHERE user_idx = #{writer} AND team_id = #{teamName};
+        WHERE user_idx = #{writer} AND id = #{id};
     </update>
 </mapper>

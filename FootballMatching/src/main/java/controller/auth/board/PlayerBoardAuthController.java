@@ -21,7 +21,7 @@ public class PlayerBoardAuthController {
     @Autowired
     private PlayerBoardAuthService playerBoardAuthService;
 
-    // 팀 모집 게시물 작성
+    // 용병 모집 게시물 작성
     @UserAuth
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -31,7 +31,7 @@ public class PlayerBoardAuthController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // 팀 모집 게시물 수정
+    // 용병 모집 게시물 수정
     @UserAuth
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
@@ -41,7 +41,7 @@ public class PlayerBoardAuthController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // 팀 모집 게시물 삭제
+    // 용병 모집 게시물 삭제
     @UserAuth
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.DELETE)
@@ -49,5 +49,14 @@ public class PlayerBoardAuthController {
     public ResponseEntity deletion(@RequestBody Board board){
         playerBoardAuthService.deletion(board);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //내가 등록한 용병 모집 게시물 보기
+    @UserAuth
+    @ResponseBody
+    @RequestMapping(value = "/me", method = RequestMethod.GET)
+    @ApiOperation(value = "등록한 팀 모집 게시물 조회", notes = "본인이 등록한 게시물을 조회합니다.", authorizations = @Authorization(value = "Authorization"))
+    public ResponseEntity list(){
+        return new ResponseEntity(playerBoardAuthService.list(), HttpStatus.OK);
     }
 }

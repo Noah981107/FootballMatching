@@ -34,7 +34,7 @@ public class TeamAuthController {
     @UserAuth
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
-    @ApiOperation(value = "팀 내용 변경", notes = "등록한 팀에 대한 팀 이름, 지역코드, 정보를 변경합니다.", authorizations = @Authorization(value = "Authorization"))
+    @ApiOperation(value = "팀 내용 변경", notes = "사용자가 등록한 팀에 대한 팀 이름, 지역코드, 정보를 변경합니다.", authorizations = @Authorization(value = "Authorization"))
     public ResponseEntity modification(@RequestBody @Validated(UserValidationGroups.teamModification.class) Team team){
         teamAuthService.modification(team);
         return new ResponseEntity(HttpStatus.OK);

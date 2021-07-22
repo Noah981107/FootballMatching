@@ -5,6 +5,7 @@ import exception.ErrorCode;
 import exception.TeamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import repository.auth.TeamAuthMapper;
 import repository.non_auth.UserMapper;
 import service.auth.TeamAuthService;
@@ -36,7 +37,7 @@ public class TeamAuthServiceImpl implements TeamAuthService {
     @Override
     public void registration(Team team) throws Exception {
         String idx = userService.findIdx(jwtUtil.getId());
-        if(idx == teamService.findUserIdx(idx)){
+        if(idx.equals(teamService.findUserIdx(idx))){
             throw new TeamException(ErrorCode.Already_Registered_Team);
         }
         else{
@@ -47,12 +48,30 @@ public class TeamAuthServiceImpl implements TeamAuthService {
     }
 
     // 팀 수정
+    @Transactional
     @Override
     public void modification(Team team) {
+        String name = team.getName();
+        String locationCode = Integer.toString(team.getLocationCode());
+        String information = team.getInformation();
         String idx = userService.findIdx(jwtUtil.getId());
-        team.setRepresentative(idx);
-        team.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        teamAuthMapper.modification(team);
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("user_idx", idx);
+        map.put("modifiedDate",Timestamp.valueOf(LocalDateTime.now()).toString());
+        if(name != null && !name.equals("string")){
+            map.put("name", name);
+            teamAuthMapper.updateName(map);
+        }
+        if(locationCode != null && !locationCode.equals("string")){
+            map.put("locationCode", locationCode);
+            teamAuthMapper.updateLocationCode(map);
+        }
+        if(information != null && !information.equals("string")){
+            map.put("information", information);
+            teamAuthMapper.updateInformation(map);
+        }
+
+
     }
 
     //팀 삭제

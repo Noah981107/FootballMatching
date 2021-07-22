@@ -38,7 +38,7 @@ public class UserController {
 
     //회원 ID 찾기 API
     @ResponseBody
-    @RequestMapping(value = "/id", method = RequestMethod.GET)
+    @RequestMapping(value = "/id", method = RequestMethod.POST)
     @ApiOperation(value = "아이디 찾기", notes = "이름 , 전화번호를 입력해야합니다.")
     public ResponseEntity findId(@RequestBody @Validated(UserValidationGroups.findId.class) Users user) throws Exception {
         return new ResponseEntity(userService.findId(user), HttpStatus.OK);

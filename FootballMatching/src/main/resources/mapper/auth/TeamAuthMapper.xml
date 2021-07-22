@@ -27,11 +27,25 @@
         WHERE user_idx = #{idx}
     </update>
 
-    <!--팀 내용 변경-->
-    <update id="modification" parameterType="domain.Team">
+    <!--팀 이름 변경-->
+    <update id="updateName" parameterType="hashmap">
         UPDATE footballMatching.team
-        SET name = #{name}, information = #{information}, modifiedDate = #{modifiedDate}
-        WHERE user_idx = #{representative};
+        SET name = #{name}, modifiedDate = #{modifiedDate}
+        WHERE user_idx = #{user_idx};
+    </update>
+
+    <!--팀 지역코드 변경-->
+    <update id="updateLocationCode" parameterType="hashmap">
+        UPDATE footballMatching.team
+        SET location_code = #{locationCode}, modifiedDate = #{modifiedDate}
+        WHERE user_idx = #{user_idx};
+    </update>
+
+    <!--팀 정보 변경-->
+    <update id="updateInformation" parameterType="hashmap">
+        UPDATE footballMatching.team
+        SET information = #{information}, modifiedDate = #{modifiedDate}
+        WHERE user_idx = #{user_idx};
     </update>
 
 </mapper>

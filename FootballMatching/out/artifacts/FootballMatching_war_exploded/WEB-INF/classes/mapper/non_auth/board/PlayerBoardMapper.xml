@@ -5,7 +5,7 @@
 
 <mapper namespace="repository.non_auth.board.PlayerBoardMapper">
 
-    <select id="list" resultType="domain.board.PlayerBoard">
+    <select id="list" resultType="domain.Board">
         SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
         FROM footballmatching.player_board AS a
                  LEFT JOIN footballmatching.user AS b
@@ -14,7 +14,7 @@
                            ON a.team_id = c.id;
     </select>
 
-    <select id = "findName" parameterType="string" resultType = "domain.board.PlayerBoard">
+    <select id = "findName" parameterType="string" resultType = "domain.Board">
         SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
         FROM footballmatching.player_board AS a
                  LEFT JOIN footballmatching.user AS b
@@ -24,7 +24,7 @@
         WHERE c.name = #{teamName};
     </select>
 
-    <select id = "findWriter" parameterType="string" resultType = "domain.board.PlayerBoard">
+    <select id = "findWriter" parameterType="string" resultType = "domain.Board">
         SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
         FROM footballmatching.player_board AS a
                  LEFT JOIN footballmatching.user AS b

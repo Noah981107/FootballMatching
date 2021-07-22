@@ -11,5 +11,7 @@ public interface TeamAuthMapper {
     void registration(Team team);
     List<Team> myTeam(String id);
     void deletion(String idx);
-    void modification(Team team);
+    void updateName(Map map);
+    void updateLocationCode(Map map);
+    void updateInformation(Map map);
 }

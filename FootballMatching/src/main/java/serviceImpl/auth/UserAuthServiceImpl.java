@@ -53,7 +53,7 @@ public class UserAuthServiceImpl implements UserAuthService {
                 throw new UserException(ErrorCode.PhoneNumber_Already_Exists); // 전화번호가 중복됨
             }
         }
-        if(passWord != null){ // 비밀번호가 수정되어 있으면
+        if(passWord != null && !passWord.equals("string")){ // 비밀번호가 수정되어 있으면
             passWord = BCrypt.hashpw(passWord, BCrypt.gensalt()); // 비밀번호 암호화
             map.put("password", passWord);
             userAuthMapper.updatePassword(map); // 비밀번호 수정

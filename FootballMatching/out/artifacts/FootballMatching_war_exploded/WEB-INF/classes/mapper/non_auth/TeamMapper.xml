@@ -5,10 +5,22 @@
 
 <mapper namespace="repository.non_auth.TeamMapper">
 
-    <!--팀 id 찾기-->
+    <!--팀 이름으로 팀 id 찾기-->
     <select id="findId" parameterType="string" resultType="string">
         SELECT id FROM footballMatching.team
         WHERE name = #{name};
+    </select>
+
+    <!--팀장 찾기-->
+    <select id="findUserIdx" parameterType="string" resultType="string">
+        SELECT user_idx FROM footballMatching.team
+        WHERE user_idx = #{idx};
+    </select>
+
+    <select id="checkTeam" parameterType="string" resultType="string">
+        SELECT id
+        FROM footballMatching.team
+        where user_idx = #{idx};
     </select>
 
     <!--팀 전체 조회-->

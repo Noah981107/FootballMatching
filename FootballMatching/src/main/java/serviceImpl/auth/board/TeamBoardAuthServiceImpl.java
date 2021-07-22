@@ -14,6 +14,7 @@ import util.JwtUtil;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
@@ -31,17 +32,23 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     private TeamService teamService;
 
     @Override
-    public void write(Board board) throws Exception {
+    public List<Board> list() {
         String idx = userService.findIdx(jwtUtil.getId());
-        String id = teamService.findId(board.getTeamName());
-        if(id == teamService.checkTeam(idx)){
+        return teamBoardAuthMapper.list(idx);
+    }
+
+    @Override
+    public void write(Board board) throws Exception {
+        String idx = userService.findIdx(jwtUtil.getId()); // 사용자의 idx 가져오기
+        String id = teamService.findId(board.getTeamName()); // 팀이름을 검색하여 팀 id 가져오기
+        if(id == null || !id.equals(teamService.checkTeam(idx))){
+            throw new TeamException(ErrorCode.Not_Team_Registered_For);
+        }
+        else{
             board.setWriter(idx);
             board.setTeamName(id);
             board.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
             teamBoardAuthMapper.write(board);
-        }
-        else{
-            throw new TeamException(ErrorCode.Not_Team_Registered_For);
         }
 
     }
@@ -50,8 +57,6 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     public void modification(Board board) {
         String idx = userService.findIdx(jwtUtil.getId());
         board.setWriter(idx);
-        String id = teamService.findId(board.getTeamName());
-        board.setTeamName(id);
         board.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
         teamBoardAuthMapper.modification(board);
     }
@@ -60,8 +65,6 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     public void deletion(Board board) {
         String idx = userService.findIdx(jwtUtil.getId());
         board.setWriter(idx);
-        String id = teamService.findId(board.getTeamName());
-        board.setTeamName(id);
         teamBoardAuthMapper.deletion(board);
     }
 }

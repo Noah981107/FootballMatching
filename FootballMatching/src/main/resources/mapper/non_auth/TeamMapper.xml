@@ -14,7 +14,7 @@
     <!--팀장 찾기-->
     <select id="findUserIdx" parameterType="string" resultType="string">
         SELECT user_idx FROM footballMatching.team
-        WHERE name = #{idx};
+        WHERE user_idx = #{idx};
     </select>
 
     <select id="checkTeam" parameterType="string" resultType="string">
