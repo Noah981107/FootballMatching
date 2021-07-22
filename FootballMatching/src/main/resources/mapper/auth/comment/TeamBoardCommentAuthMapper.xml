@@ -13,12 +13,12 @@
     <update id="modification" parameterType="domain.Comment">
         UPDATE footballMatching.team_board_comment
         SET modifiedDate = #{modifiedDate}, content = #{content}
-        WHERE user_idx = #{writer} AND board_id = #{boardNumber}
+        WHERE user_idx = #{writer} AND board_id = #{boardNumber} AND id = #{id};
     </update>
 
     <update id="deletion" parameterType="domain.Comment">
         UPDATE footballMatching.team_board_comment
         SET is_deleted = 1
-        WHERE user_idx = #{writer}
+        WHERE user_idx = #{writer} AND board_id = #{boardNumber} AND id = #{id};
     </update>
 </mapper>

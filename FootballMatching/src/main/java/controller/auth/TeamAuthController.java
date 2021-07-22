@@ -2,7 +2,7 @@ package controller.auth;
 
 import annotation.UserAuth;
 import domain.Team;
-import domain.UserValidationGroups;
+import domain.ValidationGroups;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class TeamAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "팀 등록", notes = "팀 이름, 대표자, 지역코드, 정보를 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity registration(@RequestBody @Validated(UserValidationGroups.teamRegistration.class) Team team) throws Exception{
+    public ResponseEntity registration(@RequestBody @Validated(ValidationGroups.teamRegistration.class) Team team) throws Exception{
         teamAuthService.registration(team);
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -35,7 +35,7 @@ public class TeamAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
     @ApiOperation(value = "팀 내용 변경", notes = "사용자가 등록한 팀에 대한 팀 이름, 지역코드, 정보를 변경합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity modification(@RequestBody @Validated(UserValidationGroups.teamModification.class) Team team){
+    public ResponseEntity modification(@RequestBody @Validated(ValidationGroups.teamModification.class) Team team){
         teamAuthService.modification(team);
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -4,17 +4,17 @@ import javax.validation.constraints.NotNull;
 
 public class Board {
 
-    @NotNull(groups = {UserValidationGroups.boardModification.class}, message = "게시물 번호는 비워둘 수 없습니다.")
+    @NotNull(groups = {ValidationGroups.boardModification.class}, message = "게시물 번호는 비워둘 수 없습니다.")
     protected String id;
     protected String writer;
 
-    @NotNull(groups = {UserValidationGroups.boardWrite.class}, message = "팀 이름은 비워둘 수 없습니다.")
+    @NotNull(groups = {ValidationGroups.boardWrite.class}, message = "팀 이름은 비워둘 수 없습니다.")
     protected String teamName;
 
     protected String postDate;
     protected String modifiedDate;
 
-    @NotNull(groups = {UserValidationGroups.boardWrite.class, UserValidationGroups.boardModification.class}, message = "내용은 비워둘 수 없습니다.")
+    @NotNull(groups = {ValidationGroups.boardWrite.class, ValidationGroups.boardModification.class}, message = "내용은 비워둘 수 없습니다.")
     protected String content;
     protected Boolean isDeleted;
 

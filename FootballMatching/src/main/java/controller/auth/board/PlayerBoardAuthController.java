@@ -2,7 +2,7 @@ package controller.auth.board;
 
 import annotation.UserAuth;
 import domain.Board;
-import domain.UserValidationGroups;
+import domain.ValidationGroups;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import service.auth.board.PlayerBoardAuthService;
-import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequestMapping(value = "/player-board")
@@ -26,7 +25,7 @@ public class PlayerBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "용병 모집 게시물 작성", notes = "팀 이름, 내용을 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity write(@RequestBody @Validated(UserValidationGroups.boardWrite.class) Board board) throws Exception{
+    public ResponseEntity write(@RequestBody @Validated(ValidationGroups.boardWrite.class) Board board) throws Exception{
         playerBoardAuthService.write(board);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -36,7 +35,7 @@ public class PlayerBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
     @ApiOperation(value = "용병 모집 게시물 수정", notes = "팀 이름, 내용을 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity modification(@RequestBody @Validated(UserValidationGroups.boardModification.class) Board board){
+    public ResponseEntity modification(@RequestBody @Validated(ValidationGroups.boardModification.class) Board board){
         playerBoardAuthService.modification(board);
         return new ResponseEntity(HttpStatus.OK);
     }
