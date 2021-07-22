@@ -1,11 +1,11 @@
 package repository.auth.board;
 
-import domain.board.PlayerBoard;
+import domain.Board;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlayerBoardAuthMapper {
-    void write(PlayerBoard playerBoard);
-    void modification(PlayerBoard playerBoard);
-    void deletion(PlayerBoard playerBoard);
+    void write(Board board);
+    void modification(Board board);
+    void deletion(Board board);
 }

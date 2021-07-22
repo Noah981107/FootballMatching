@@ -1,13 +1,15 @@
 package controller.auth.board;
 
 import annotation.UserAuth;
-import domain.board.PlayerBoard;
+import domain.Board;
+import domain.UserValidationGroups;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import service.auth.board.PlayerBoardAuthService;
 import springfox.documentation.annotations.ApiIgnore;
@@ -24,8 +26,8 @@ public class PlayerBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "용병 모집 게시물 작성", notes = "팀 이름, 내용을 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity write(@RequestBody PlayerBoard playerBoard){
-        playerBoardAuthService.write(playerBoard);
+    public ResponseEntity write(@RequestBody @Validated(UserValidationGroups.boardWrite.class) Board board) throws Exception{
+        playerBoardAuthService.write(board);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -34,8 +36,8 @@ public class PlayerBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
     @ApiOperation(value = "용병 모집 게시물 수정", notes = "팀 이름, 내용을 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity modification(@RequestBody PlayerBoard playerBoard){
-        playerBoardAuthService.modification(playerBoard);
+    public ResponseEntity modification(@RequestBody @Validated(UserValidationGroups.boardModification.class) Board board){
+        playerBoardAuthService.modification(board);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -44,8 +46,8 @@ public class PlayerBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.DELETE)
     @ApiOperation(value = "용병 모집 게시물 삭제", notes = "용병 모집 게시물을 삭제합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity deletion(@RequestBody PlayerBoard playerBoard){
-        playerBoardAuthService.deletion(playerBoard);
+    public ResponseEntity deletion(@RequestBody Board board){
+        playerBoardAuthService.deletion(board);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

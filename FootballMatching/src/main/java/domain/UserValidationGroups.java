@@ -8,4 +8,8 @@ public class UserValidationGroups {
     public interface findPassword {};
     public interface changePassword {};
     public interface modification {};
+    public interface teamRegistration {};
+    public interface teamModification {};
+    public interface boardWrite {};
+    public interface boardModification {};
 }

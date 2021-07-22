@@ -1,6 +1,6 @@
 package serviceImpl.non_auth.board;
 
-import domain.board.TeamBoard;
+import domain.Board;
 import exception.ErrorCode;
 import exception.TeamBoardException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class TeamBoardServiceImpl implements TeamBoardService {
     private TeamBoardMapper teamBoardMapper;
 
     @Override
-    public List<TeamBoard> list() throws Exception {
-        List<TeamBoard> result = teamBoardMapper.list();
+    public List<Board> list() throws Exception {
+        List<Board> result = teamBoardMapper.list();
         if(result.isEmpty()){
             throw new TeamBoardException(ErrorCode.Registered_Post_Is_Empty);
         }
@@ -28,8 +28,8 @@ public class TeamBoardServiceImpl implements TeamBoardService {
     }
 
     @Override
-    public List<TeamBoard> findName(String teamName) {
-        List<TeamBoard> result = teamBoardMapper.findName(teamName);
+    public List<Board> findName(String teamName) {
+        List<Board> result = teamBoardMapper.findName(teamName);
         if(result.isEmpty()){
             throw new TeamBoardException(ErrorCode.Registered_Post_Is_Empty);
         }
@@ -39,8 +39,8 @@ public class TeamBoardServiceImpl implements TeamBoardService {
     }
 
     @Override
-    public List<TeamBoard> findWriter(String writer) {
-        List<TeamBoard> result = teamBoardMapper.findWriter(writer);
+    public List<Board> findWriter(String writer) {
+        List<Board> result = teamBoardMapper.findWriter(writer);
         if(result.isEmpty()){
             throw new TeamBoardException(ErrorCode.Registered_Post_Is_Empty);
         }

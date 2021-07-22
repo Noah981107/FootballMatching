@@ -23,6 +23,11 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.findId(name);
     }
 
+    @Override
+    public String findUserIdx(String idx) {
+        return teamMapper.findUserIdx(idx);
+    }
+
     //팀 전체 조회
     @Override
     public List<Team> teamList() {
@@ -33,6 +38,11 @@ public class TeamServiceImpl implements TeamService {
         else{
             return result;
         }
+    }
+
+    @Override
+    public String checkTeam(String user_idx) {
+        return teamMapper.checkTeam(user_idx);
     }
 
     //팀 이름으로 팀 조회

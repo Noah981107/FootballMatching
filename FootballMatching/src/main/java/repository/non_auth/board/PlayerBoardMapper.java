@@ -1,13 +1,13 @@
 package repository.non_auth.board;
 
-import domain.board.PlayerBoard;
+import domain.Board;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface PlayerBoardMapper {
-    List<PlayerBoard> list();
-    List<PlayerBoard> findName(String teamName);
-    List<PlayerBoard> findWriter(String writer);
+    List<Board> list();
+    List<Board> findName(String teamName);
+    List<Board> findWriter(String writer);
 }

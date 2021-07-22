@@ -44,8 +44,6 @@ public class UserController {
         return new ResponseEntity(userService.findId(user), HttpStatus.OK);
     }
 
-
-
     //회원 비밀번호 찾기 API - id, 이름, 전화번호, 일치여부 확인
     @ResponseBody
     @RequestMapping(value = "/password", method = RequestMethod.POST)

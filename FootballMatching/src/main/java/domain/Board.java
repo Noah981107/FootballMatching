@@ -1,12 +1,29 @@
-package domain.board;
+package domain;
 
-public class PlayerBoard {
+import javax.validation.constraints.NotNull;
+
+public class Board {
+
+    protected String id;
     protected String writer;
+
+    @NotNull(groups = {UserValidationGroups.boardWrite.class, UserValidationGroups.boardModification.class}, message = "팀 이름은 비워둘 수 없습니다.")
     protected String teamName;
+
     protected String postDate;
     protected String modifiedDate;
+
+    @NotNull(groups = {UserValidationGroups.boardWrite.class, UserValidationGroups.boardModification.class}, message = "내용은 비워둘 수 없습니다.")
     protected String content;
     protected Boolean isDeleted;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getWriter() {
         return writer;

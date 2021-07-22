@@ -21,17 +21,17 @@
     </select>
 
     <!--팀 삭제-->
-    <update id="deletion" parameterType="hashmap">
+    <update id="deletion" parameterType="string">
         UPDATE footballMatching.team
         SET is_deleted = 1
-        WHERE user_idx = #{idx} AND name = #{teamName};
+        WHERE user_idx = #{idx}
     </update>
 
     <!--팀 내용 변경-->
     <update id="modification" parameterType="domain.Team">
         UPDATE footballMatching.team
         SET name = #{name}, information = #{information}, modifiedDate = #{modifiedDate}
-        WHERE user_idx = #{representative}
+        WHERE user_idx = #{representative};
     </update>
 
 </mapper>

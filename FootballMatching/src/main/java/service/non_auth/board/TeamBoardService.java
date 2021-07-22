@@ -1,11 +1,10 @@
 package service.non_auth.board;
 
-import domain.board.TeamBoard;
-
+import domain.Board;
 import java.util.List;
 
 public interface TeamBoardService {
-    List<TeamBoard> list() throws Exception;
-    List<TeamBoard> findName(String teamName);
-    List<TeamBoard> findWriter(String writer);
+    List<Board> list() throws Exception;
+    List<Board> findName(String teamName);
+    List<Board> findWriter(String writer);
 }

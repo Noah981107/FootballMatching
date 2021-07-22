@@ -1,11 +1,11 @@
 package service.non_auth.board;
 
-import domain.board.PlayerBoard;
+import domain.Board;
 
 import java.util.List;
 
 public interface PlayerBoardService {
-    List<PlayerBoard> list() throws Exception;
-    List<PlayerBoard> findName(String teamName);
-    List<PlayerBoard> findWriter(String writer);
+    List<Board> list() throws Exception;
+    List<Board> findName(String teamName);
+    List<Board> findWriter(String writer);
 }

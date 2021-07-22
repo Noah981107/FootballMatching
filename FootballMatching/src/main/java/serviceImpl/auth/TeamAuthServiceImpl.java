@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import repository.auth.TeamAuthMapper;
 import repository.non_auth.UserMapper;
 import service.auth.TeamAuthService;
+import service.non_auth.TeamService;
 import service.non_auth.UserService;
 import util.JwtUtil;
 
@@ -23,6 +24,9 @@ public class TeamAuthServiceImpl implements TeamAuthService {
     private TeamAuthMapper teamAuthMapper;
 
     @Autowired
+    private TeamService teamService;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -30,11 +34,32 @@ public class TeamAuthServiceImpl implements TeamAuthService {
 
     //팀 등록
     @Override
-    public void registration(Team team) {
+    public void registration(Team team) throws Exception {
+        String idx = userService.findIdx(jwtUtil.getId());
+        if(idx == teamService.findUserIdx(idx)){
+            throw new TeamException(ErrorCode.Already_Registered_Team);
+        }
+        else{
+            team.setRepresentative(idx);
+            team.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+            teamAuthMapper.registration(team);
+        }
+    }
+
+    // 팀 수정
+    @Override
+    public void modification(Team team) {
         String idx = userService.findIdx(jwtUtil.getId());
         team.setRepresentative(idx);
-        team.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        teamAuthMapper.registration(team);
+        team.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+        teamAuthMapper.modification(team);
+    }
+
+    //팀 삭제
+    @Override
+    public void deletion() {
+        String idx = userService.findIdx(jwtUtil.getId());
+        teamAuthMapper.deletion(idx);
     }
 
     //내가 등록한 팀 조회
@@ -48,24 +73,5 @@ public class TeamAuthServiceImpl implements TeamAuthService {
         else{
             return result;
         }
-    }
-
-    //팀 삭제
-    @Override
-    public void deletion(String teamName) {
-        String idx = userService.findIdx(jwtUtil.getId());
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("idx", idx);
-        map.put("teamName", teamName);
-        teamAuthMapper.deletion(map);
-    }
-
-    // 팀 수정
-    @Override
-    public void modification(Team team) {
-        String idx = userService.findIdx(jwtUtil.getId());
-        team.setRepresentative(idx);
-        team.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        teamAuthMapper.modification(team);
     }
 }

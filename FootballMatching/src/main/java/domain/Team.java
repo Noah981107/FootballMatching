@@ -1,10 +1,18 @@
 package domain;
 
+import javax.validation.constraints.NotNull;
+
 public class Team {
 
+    @NotNull(groups = {UserValidationGroups.teamRegistration.class, UserValidationGroups.teamModification.class}, message = "팀 이름은 비워둘 수 없습니다.")
     protected String name;
+
     protected String representative;
+
+    @NotNull(groups = {UserValidationGroups.teamModification.class}, message = "지역 코드는 비워둘 수 없습니다.")
     protected int locationCode;
+
+    @NotNull(groups = {UserValidationGroups.teamRegistration.class, UserValidationGroups.teamModification.class}, message = "팀 정보를 비워둘 수 없습니다.")
     protected String information;
     protected String registrationDate;
     protected String modifiedDate;

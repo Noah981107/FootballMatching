@@ -1,13 +1,15 @@
 package controller.auth.board;
 
 import annotation.UserAuth;
-import domain.board.TeamBoard;
+import domain.Board;
+import domain.UserValidationGroups;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import service.auth.board.TeamBoardAuthService;
 
@@ -23,8 +25,8 @@ public class TeamBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "팀 모집 게시물 작성", notes = "팀 이름, 내용을 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity write(@RequestBody TeamBoard teamBoard){
-        teamBoardAuthService.write(teamBoard);
+    public ResponseEntity write(@RequestBody @Validated(UserValidationGroups.boardWrite.class) Board board) throws Exception{
+        teamBoardAuthService.write(board);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -33,8 +35,8 @@ public class TeamBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
     @ApiOperation(value = "팀 모집 게시물 수정", notes = "팀 이름, 내용을 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity modification(@RequestBody TeamBoard teamBoard){
-        teamBoardAuthService.modification(teamBoard);
+    public ResponseEntity modification(@RequestBody @Validated(UserValidationGroups.boardModification.class) Board board){
+        teamBoardAuthService.modification(board);
         return new ResponseEntity(HttpStatus.OK);
     }
     // 팀 모집 게시물 삭제
@@ -42,8 +44,8 @@ public class TeamBoardAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.DELETE)
     @ApiOperation(value = "팀 모집 게시물 삭제", notes = "팀 모집 게시물을 삭제합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity deletion(@RequestBody TeamBoard teamBoard){
-        teamBoardAuthService.deletion(teamBoard);
+    public ResponseEntity deletion(@RequestBody Board board){
+        teamBoardAuthService.deletion(board);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

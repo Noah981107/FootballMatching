@@ -10,6 +10,6 @@ import java.util.Map;
 public interface TeamAuthMapper {
     void registration(Team team);
     List<Team> myTeam(String id);
-    void deletion(Map map);
+    void deletion(String idx);
     void modification(Team team);
 }

@@ -1,12 +1,9 @@
 package serviceImpl.auth.board;
 
-import domain.board.PlayerBoard;
-import domain.board.TeamBoard;
+import domain.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.auth.board.PlayerBoardAuthMapper;
-import repository.non_auth.TeamMapper;
-import repository.non_auth.UserMapper;
 import service.auth.board.PlayerBoardAuthService;
 import service.non_auth.TeamService;
 import service.non_auth.UserService;
@@ -31,32 +28,31 @@ public class PlayerBoardAuthServiceImpl implements PlayerBoardAuthService {
     private TeamService teamService;
 
     @Override
-    public void write(PlayerBoard playerBoard) {
+    public void write(Board board) {
         String idx = userService.findIdx(jwtUtil.getId());
-        playerBoard.setWriter(idx);
-        String id = teamService.findId(playerBoard.getTeamName());
-        playerBoard.setTeamName(id);
-        playerBoard.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        System.out.println(playerBoard);
-        playerBoardAuthMapper.write(playerBoard);
+        board.setWriter(idx);
+        String id = teamService.findId(board.getTeamName());
+        board.setTeamName(id);
+        board.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+        playerBoardAuthMapper.write(board);
     }
 
     @Override
-    public void modification(PlayerBoard playerBoard) {
+    public void modification(Board board) {
         String idx = userService.findIdx(jwtUtil.getId());
-        playerBoard.setWriter(idx);
-        String id = teamService.findId(playerBoard.getTeamName());
-        playerBoard.setTeamName(id);
-        playerBoard.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        playerBoardAuthMapper.modification(playerBoard);
+        board.setWriter(idx);
+        String id = teamService.findId(board.getTeamName());
+        board.setTeamName(id);
+        board.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+        playerBoardAuthMapper.modification(board);
     }
 
     @Override
-    public void deletion(PlayerBoard playerBoard) {
+    public void deletion(Board board) {
         String idx = userService.findIdx(jwtUtil.getId());
-        playerBoard.setWriter(idx);
-        String id = teamService.findId(playerBoard.getTeamName());
-        playerBoard.setTeamName(id);
-        playerBoardAuthMapper.deletion(playerBoard);
+        board.setWriter(idx);
+        String id = teamService.findId(board.getTeamName());
+        board.setTeamName(id);
+        playerBoardAuthMapper.deletion(board);
     }
 }

@@ -1,12 +1,12 @@
 package serviceImpl.auth.board;
 
-import domain.board.TeamBoard;
+import domain.Board;
+
+import exception.ErrorCode;
+import exception.TeamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.auth.board.TeamBoardAuthMapper;
-import repository.non_auth.TeamMapper;
-import repository.non_auth.UserMapper;
-import service.auth.TeamAuthService;
 import service.auth.board.TeamBoardAuthService;
 import service.non_auth.TeamService;
 import service.non_auth.UserService;
@@ -31,31 +31,37 @@ public class TeamBoardAuthServiceImpl implements TeamBoardAuthService {
     private TeamService teamService;
 
     @Override
-    public void write(TeamBoard teamBoard) {
+    public void write(Board board) throws Exception {
         String idx = userService.findIdx(jwtUtil.getId());
-        teamBoard.setWriter(idx);
-        String id = teamService.findId(teamBoard.getTeamName());
-        teamBoard.setTeamName(id);
-        teamBoard.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        teamBoardAuthMapper.write(teamBoard);
+        String id = teamService.findId(board.getTeamName());
+        if(id == teamService.checkTeam(idx)){
+            board.setWriter(idx);
+            board.setTeamName(id);
+            board.setPostDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+            teamBoardAuthMapper.write(board);
+        }
+        else{
+            throw new TeamException(ErrorCode.Not_Team_Registered_For);
+        }
+
     }
 
     @Override
-    public void modification(TeamBoard teamBoard) {
+    public void modification(Board board) {
         String idx = userService.findIdx(jwtUtil.getId());
-        teamBoard.setWriter(idx);
-        String id = teamService.findId(teamBoard.getTeamName());
-        teamBoard.setTeamName(id);
-        teamBoard.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
-        teamBoardAuthMapper.modification(teamBoard);
+        board.setWriter(idx);
+        String id = teamService.findId(board.getTeamName());
+        board.setTeamName(id);
+        board.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()).toString());
+        teamBoardAuthMapper.modification(board);
     }
 
     @Override
-    public void deletion(TeamBoard teamBoard) {
+    public void deletion(Board board) {
         String idx = userService.findIdx(jwtUtil.getId());
-        teamBoard.setWriter(idx);
-        String id = teamService.findId(teamBoard.getTeamName());
-        teamBoard.setTeamName(id);
-        teamBoardAuthMapper.deletion(teamBoard);
+        board.setWriter(idx);
+        String id = teamService.findId(board.getTeamName());
+        board.setTeamName(id);
+        teamBoardAuthMapper.deletion(board);
     }
 }

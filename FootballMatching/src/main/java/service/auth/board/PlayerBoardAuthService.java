@@ -1,11 +1,10 @@
 package service.auth.board;
 
-import domain.board.PlayerBoard;
-import domain.board.TeamBoard;
+import domain.Board;
 
 public interface PlayerBoardAuthService {
 
-    void write(PlayerBoard playerBoard);
-    void modification(PlayerBoard playerBoard);
-    void deletion(PlayerBoard playerBoard);
+    void write(Board board);
+    void modification(Board board);
+    void deletion(Board board);
 }

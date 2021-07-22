@@ -2,12 +2,14 @@ package controller.auth;
 
 import annotation.UserAuth;
 import domain.Team;
+import domain.UserValidationGroups;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import service.auth.TeamAuthService;
 
@@ -23,7 +25,7 @@ public class TeamAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "팀 등록", notes = "팀 이름, 대표자, 지역코드, 정보를 입력합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity registration(@RequestBody Team team){
+    public ResponseEntity registration(@RequestBody @Validated(UserValidationGroups.teamRegistration.class) Team team) throws Exception{
         teamAuthService.registration(team);
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -32,8 +34,8 @@ public class TeamAuthController {
     @UserAuth
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PATCH)
-    @ApiOperation(value = "팀 내용 변경", notes = "등록한 팀에 대한 내용을 변경합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity modification(@RequestBody Team team){
+    @ApiOperation(value = "팀 내용 변경", notes = "등록한 팀에 대한 팀 이름, 지역코드, 정보를 변경합니다.", authorizations = @Authorization(value = "Authorization"))
+    public ResponseEntity modification(@RequestBody @Validated(UserValidationGroups.teamModification.class) Team team){
         teamAuthService.modification(team);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -43,8 +45,8 @@ public class TeamAuthController {
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.DELETE)
     @ApiOperation(value = "팀 삭제", notes = "등록한 팀을 삭제합니다.", authorizations = @Authorization(value = "Authorization"))
-    public ResponseEntity deletion(@RequestParam(value ="team-name") String teamName){
-        teamAuthService.deletion(teamName);
+    public ResponseEntity deletion(){
+        teamAuthService.deletion();
         return new ResponseEntity(HttpStatus.OK);
     }
 
