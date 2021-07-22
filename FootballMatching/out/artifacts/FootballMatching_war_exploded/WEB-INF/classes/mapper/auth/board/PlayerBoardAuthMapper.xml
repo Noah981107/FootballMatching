@@ -19,4 +19,13 @@
         SET is_deleted = 1
         WHERE user_idx = #{writer} AND id = #{id};
     </update>
+    <select id="list" parameterType="string" resultType="domain.Board">
+        SELECT a.id, b.id as writer, c.name as teamName, a.postDate, a.modifiedDate, a.content
+        FROM footballMatching.player_board as a
+                 LEFT JOIN footballMatching.user as b
+                           ON a.user_idx = b.idx
+                 LEFT JOIN footballMatching.team as c
+                           ON a.team_id = c.id
+        WHERE a.user_idx = #{idx};
+    </select>
 </mapper>
