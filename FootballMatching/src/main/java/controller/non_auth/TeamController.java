@@ -32,7 +32,7 @@ public class TeamController {
     @ResponseBody
     @RequestMapping(value = "/name", method = RequestMethod.GET)
     @ApiOperation(value = "팀 이름으로 조회", notes = "등록된 팀을 팀 이름으로 조회합니다.")
-    public ResponseEntity findName(@RequestParam(value = "team-name") String teamName) throws Exception{
+    public ResponseEntity findName(@RequestParam(value = "team-name", required = false) String teamName) throws Exception{
         return new ResponseEntity(teamService.findName(teamName), HttpStatus.OK);
     }
 

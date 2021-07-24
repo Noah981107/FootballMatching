@@ -1,28 +1,31 @@
 package exception;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;
 
-public class MyException extends RuntimeException {
+@JsonIgnoreProperties({"suppressed", "localizedMessage", "cause", "stackTrace"})
+public class MyException extends RuntimeException{
 
     private String code;
+    private String message;
     private HttpStatus status;
     private String detail;
     private String exceptionName;
 
     public MyException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
         this.code = errorCode.getCode();
+        this.message = errorCode.getMessage();
         this.status = errorCode.getHttpStatus();
         this.exceptionName = this.getClass().getName();
     }
 
-    public MyException(ErrorCode errorCode, HttpStatus httpStatus) {
-        super(errorCode.getMessage());
-        this.code = errorCode.getCode();
-        this.status = httpStatus;
-        this.exceptionName = this.getClass().getName();
+    public String getMessage() {
+        return message;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
     public String getDetail() {
         return detail;
     }
