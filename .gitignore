@@ -34,5 +34,5 @@ build/
 
 ### ###
 
-FootballMatching/src/main/resources/mybatis/config.properties
+/src/main/resources/mybatis/config.properties
 /.mvn/
