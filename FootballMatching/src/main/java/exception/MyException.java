@@ -26,6 +26,7 @@ public class MyException extends RuntimeException{
     public void setMessage(String message) {
         this.message = message;
     }
+
     public String getDetail() {
         return detail;
     }
