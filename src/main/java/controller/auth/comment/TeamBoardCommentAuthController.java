@@ -1,7 +1,6 @@
 package controller.auth.comment;
 
 import annotation.UserAuth;
-import com.sun.xml.internal.ws.api.FeatureListValidatorAnnotation;
 import domain.Comment;
 import domain.ValidationGroups;
 import io.swagger.annotations.ApiOperation;
