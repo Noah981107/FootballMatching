@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.auth.TeamAuthMapper;
-import repository.non_auth.UserMapper;
 import service.auth.TeamAuthService;
 import service.non_auth.TeamService;
 import service.non_auth.UserService;

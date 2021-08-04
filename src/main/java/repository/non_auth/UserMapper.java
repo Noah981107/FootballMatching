@@ -3,8 +3,6 @@ package repository.non_auth;
 import domain.Users;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
-
 @Repository
 public interface UserMapper {
     String checkId(String id); // 아이디 중복 검사

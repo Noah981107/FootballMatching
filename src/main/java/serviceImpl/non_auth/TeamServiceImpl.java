@@ -5,7 +5,6 @@ import exception.ErrorCode;
 import exception.TeamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.non_auth.FieldMapper;
 import repository.non_auth.TeamMapper;
 import service.non_auth.TeamService;
 

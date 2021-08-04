@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.auth.board.PlayerBoardAuthMapper">
+    <insert id="write" parameterType="domain.Board">
+        INSERT INTO footballMatching.player_board
+            (user_idx, team_id, postDate, content)
+        VALUES (#{writer}, #{teamName}, #{postDate}, #{content});
+    </insert>
+    <update id="modification" parameterType="domain.Board">
+        UPDATE footballMatching.player_board
+        SET content = #{content}, modifiedDate = #{modifiedDate}
+        WHERE user_idx = #{writer} AND id = #{id};
+    </update>
+    <update id="deletion" parameterType="domain.Board">
+        UPDATE footballMatching.player_board
+        SET is_deleted = 1
+        WHERE user_idx = #{writer} AND id = #{id};
+    </update>
+    <select id="list" parameterType="string" resultType="domain.Board">
+        SELECT a.id, b.id as writer, c.name as teamName, a.postDate, a.modifiedDate, a.content
+        FROM footballMatching.player_board as a
+                 LEFT JOIN footballMatching.user as b
+                           ON a.user_idx = b.idx
+                 LEFT JOIN footballMatching.team as c
+                           ON a.team_id = c.id
+        WHERE a.user_idx = #{idx};
+    </select>
+</mapper>

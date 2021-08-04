@@ -7,14 +7,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import repository.auth.UserAuthMapper;
 import service.non_auth.UserService;
 import service.auth.UserAuthService;
 import util.JwtUtil;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @Service

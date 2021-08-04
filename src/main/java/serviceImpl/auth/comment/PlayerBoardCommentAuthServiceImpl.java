@@ -4,10 +4,7 @@ import domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.auth.comment.PlayerBoardCommentAuthMapper;
-import repository.auth.comment.TeamBoardCommentAuthMapper;
-import repository.non_auth.UserMapper;
 import service.auth.comment.PlayerBoardCommentAuthService;
-import service.auth.comment.TeamBoardCommentAuthService;
 import service.non_auth.UserService;
 import util.JwtUtil;
 

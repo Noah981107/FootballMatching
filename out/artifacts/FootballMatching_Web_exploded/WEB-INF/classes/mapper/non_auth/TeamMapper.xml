@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.non_auth.TeamMapper">
+
+    <!--팀 이름으로 팀 id 찾기-->
+    <select id="findId" parameterType="string" resultType="string">
+        SELECT id FROM footballMatching.team
+        WHERE name = #{name};
+    </select>
+
+    <!--팀장 찾기-->
+    <select id="findUserIdx" parameterType="string" resultType="string">
+        SELECT user_idx FROM footballMatching.team
+        WHERE user_idx = #{idx};
+    </select>
+
+    <select id="checkTeam" parameterType="string" resultType="string">
+        SELECT id
+        FROM footballMatching.team
+        where user_idx = #{idx};
+    </select>
+
+    <!--팀 전체 조회-->
+    <select id="teamList" resultType="domain.Team">
+        SELECT a.name, b.id as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
+        FROM footballMatching.team as a
+        LEFT JOIN footballMatching.user as b
+        ON a.user_idx = b.idx
+        WHERE a.is_deleted = 0;
+    </select>
+
+    <!--팀 이름으로 팀 조회-->
+    <select id ="findName" parameterType="string" resultType="domain.Team">
+        SELECT a. name, b.id as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
+        FROM footballMatching.team as a
+        LEFT JOIN footballMatching.user as b
+        ON a.user_idx = b.idx
+        WHERE a.name = #{teamName} AND a.is_deleted = 0;
+    </select>
+
+    <!--지역 별 팀 조회-->
+    <select id="findLocal" parameterType="int" resultType="domain.Team">
+        SELECT a. name, b.id as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
+        FROM footballMatching.team as a
+        LEFT JOIN footballMatching.user as b
+        ON a.user_idx = b.idx
+        WHERE a.location_code = #{locationCode} AND a.is_deleted = 0;
+    </select>
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.non_auth.board.TeamBoardMapper">
+
+    <select id="list" resultType="domain.Board">
+        SELECT a.id, b.name AS writer, c.name AS teamName, a.postDate, a.content
+        FROM footballmatching.team_board AS a
+                 LEFT JOIN footballmatching.user AS b
+                           ON a.user_idx = b.idx
+                 LEFT JOIN footballmatching.team AS c
+                           ON a.team_id = c.id;
+    </select>
+
+    <select id = "findName" parameterType="string" resultType = "domain.Board">
+        SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
+        FROM footballmatching.team_board AS a
+                 LEFT JOIN footballmatching.user AS b
+                           ON a.user_idx = b.idx
+                 LEFT JOIN footballmatching.team AS c
+                           ON a.team_id = c.id
+        WHERE c.name = #{teamName};
+    </select>
+
+    <select id = "findWriter" parameterType="string" resultType = "domain.Board">
+        SELECT b.name AS writer, c.name AS teamName, a.postDate, a.content
+        FROM footballmatching.team_board AS a
+                 LEFT JOIN footballmatching.user AS b
+                           ON a.user_idx = b.idx
+                 LEFT JOIN footballmatching.team AS c
+                           ON a.team_id = c.id
+        WHERE b.name = #{writer};
+    </select>
+</mapper>

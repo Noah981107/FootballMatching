@@ -1,10 +1,7 @@
 package repository.non_auth;
 
 import domain.BusinessUsers;
-import domain.Users;
 import org.springframework.stereotype.Repository;
-
-import java.util.Map;
 
 @Repository
 public interface BusinessUserMapper {

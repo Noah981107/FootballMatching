@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.auth.TeamAuthMapper">
+
+    <!--팀 등록-->
+    <insert id="registration" parameterType="domain.Team">
+        INSERT INTO footballMatching.team(name, user_idx, location_code, information, registrationDate)
+        VALUES (#{name}, #{representative}, #{locationCode}, #{information}, #{registrationDate});
+    </insert>
+
+    <!--회원이 등록한 팀 조회-->
+    <select id="myTeam" parameterType="string" resultType="domain.Team">
+        SELECT a.name, b.name as representative, a.location_code as locationCode, a.information, a.registrationDate, a.modifiedDate
+        FROM footballMatching.team as a
+        LEFT JOIN footballMatching.user as b
+        ON a.user_idx = b.idx
+        WHERE b.id = #{id};
+    </select>
+
+    <!--팀 삭제-->
+    <update id="deletion" parameterType="string">
+        UPDATE footballMatching.team
+        SET is_deleted = 1
+        WHERE user_idx = #{idx}
+    </update>
+
+    <!--팀 이름 변경-->
+    <update id="updateName" parameterType="hashmap">
+        UPDATE footballMatching.team
+        SET name = #{name}, modifiedDate = #{modifiedDate}
+        WHERE user_idx = #{user_idx};
+    </update>
+
+    <!--팀 지역코드 변경-->
+    <update id="updateLocationCode" parameterType="hashmap">
+        UPDATE footballMatching.team
+        SET location_code = #{locationCode}, modifiedDate = #{modifiedDate}
+        WHERE user_idx = #{user_idx};
+    </update>
+
+    <!--팀 정보 변경-->
+    <update id="updateInformation" parameterType="hashmap">
+        UPDATE footballMatching.team
+        SET information = #{information}, modifiedDate = #{modifiedDate}
+        WHERE user_idx = #{user_idx};
+    </update>
+
+</mapper>

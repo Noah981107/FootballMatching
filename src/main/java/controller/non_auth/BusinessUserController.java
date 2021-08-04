@@ -1,7 +1,6 @@
 package controller.non_auth;
 
 import domain.BusinessUsers;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

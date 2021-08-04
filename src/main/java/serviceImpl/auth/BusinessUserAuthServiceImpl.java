@@ -3,7 +3,6 @@ package serviceImpl.auth;
 import domain.BusinessUsers;
 import exception.BusinessUserException;
 import exception.ErrorCode;
-import exception.UserException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

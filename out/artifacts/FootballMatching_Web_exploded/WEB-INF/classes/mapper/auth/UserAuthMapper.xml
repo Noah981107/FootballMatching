@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.auth.UserAuthMapper">
+
+    <!--회원 정보 변경 - 이름-->
+    <update id="updateName" parameterType="hashMap">
+        UPDATE footballMatching.user
+        SET name = #{name}
+        WHERE id = #{id};
+    </update>
+
+    <!--회원 정보 변경 - 전화번호-->
+    <update id="updatePhoneNumber" parameterType="hashMap">
+        UPDATE footballMatching.user
+        SET phoneNumber = #{phoneNumber}
+        WHERE id = #{id};
+    </update>
+
+    <!--회원 정보 변경 - 비밀번호-->
+    <update id="updatePassword" parameterType="hashMap">
+        UPDATE footballMatching.user
+        SET password = #{password}
+        WHERE id = #{id};
+    </update>
+
+    <!--자신의 정보 조회-->
+    <select id="inquiry" parameterType="string" resultType="domain.Users">
+        SELECT id, name, phoneNumber, location_code as locationCode, joinDate FROM footballMatching.user WHERE id =#{id};
+    </select>
+
+    <!--회원 탈퇴-->
+    <update id = "withdraw" parameterType="string">
+        UPDATE footballMatching.user
+        SET is_deleted = 1
+        WHERE id = #{id};
+    </update>
+</mapper>
