@@ -1,2 +1,13 @@
-# FootballMatching
-Spring을 활용한 여름 방학 개인 프로젝트 입니다.
+# FootballMatching_API
+
+<BCSD - 개인 프로젝트> - 풋살 매칭 게시판
+
+Tech Stack
+- Spring
+- Java 8
+- Mybatis
+- AWS EC2
+- Jenkins
+- NginX
+- MySQL
+- Tomcat
