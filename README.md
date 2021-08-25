@@ -1,6 +1,6 @@
 # FootballMatching_API
 
-<BCSD - 개인 프로젝트> - 풋살 매칭 게시판
+<BCSD - 개인 프로젝트> - 풋살 매칭 게시판 API
 
 Tech Stack
 - Spring
